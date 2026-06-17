@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026.06.17 한국증시 마감 브리핑</title>
+<style>
+  :root{
+    --bg:#0b0e14; --card:#141a24; --card2:#1b2230;
+    --line:#27303f; --txt:#eef2f8; --sub:#9aa7bd;
+    --up:#ff5b5b; --down:#3d8bff; --gold:#ffc861; --teal:#27e0b3;
+    --accent:#5b8cff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--txt);
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    -webkit-font-smoothing:antialiased; padding:28px 14px 60px;}
+  .wrap{max-width:480px; margin:0 auto;}
+  .hint{text-align:center; color:var(--sub); font-size:12.5px; margin-bottom:18px; line-height:1.6;}
+  .card{position:relative; background:var(--card); border:1px solid var(--line);
+    border-radius:24px; padding:30px 26px; margin-bottom:18px; overflow:hidden;
+    aspect-ratio:4/5; display:flex; flex-direction:column;}
+  .card::before{content:""; position:absolute; inset:0;
+    background:radial-gradient(120% 80% at 100% 0%, rgba(91,140,255,.10), transparent 55%);
+    pointer-events:none;}
+  .pagenum{position:absolute; top:18px; right:22px; font-size:12px; color:var(--sub);
+    letter-spacing:.5px; z-index:2;}
+  .kicker{font-size:12.5px; color:var(--accent); font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; margin-bottom:12px;}
+  .title{font-size:25px; font-weight:800; line-height:1.32; letter-spacing:-.4px;}
+  .title .hl{color:var(--gold);}
+  .body{position:relative; z-index:2;}
+  .sub{color:var(--sub); font-size:14px; line-height:1.7;}
+  .brand{margin-top:auto; display:flex; align-items:center; gap:9px; padding-top:18px;
+    font-size:12.5px; color:var(--sub); z-index:2;}
+  .dot{width:9px; height:9px; border-radius:50%; background:var(--teal);}
+
+  .cover{background:linear-gradient(160deg,#16203a 0%,#0c1018 70%);}
+  .cover .big{font-size:46px; font-weight:900; line-height:1.05; letter-spacing:-1px;}
+  .cover .date{font-size:15px; color:var(--gold); font-weight:700; margin-bottom:18px; letter-spacing:.5px;}
+  .cover .oneline{font-size:15.5px; color:var(--txt); line-height:1.6; margin-top:18px;
+    border-left:3px solid var(--accent); padding-left:14px;}
+
+  .idx{display:flex; gap:12px; margin:6px 0 4px;}
+  .idxbox{flex:1; background:var(--card2); border:1px solid var(--line);
+    border-radius:16px; padding:16px 14px;}
+  .idxbox .nm{font-size:13px; color:var(--sub); margin-bottom:7px;}
+  .idxbox .vl{font-size:25px; font-weight:800; letter-spacing:-.5px;}
+  .idxbox .ch{font-size:13.5px; font-weight:700; margin-top:4px;}
+  .up{color:var(--up);} .down{color:var(--down);}
+  .fxrow{margin-top:14px; background:var(--card2); border:1px solid var(--line);
+    border-radius:14px; padding:13px 16px; display:flex; justify-content:space-between;
+    align-items:center; font-size:14px;}
+  .fxrow b{font-size:16px; font-weight:800;}
+
+  .li{display:flex; gap:11px; margin-top:14px; font-size:14.5px; line-height:1.55;}
+  .li .n{flex:0 0 auto; width:23px; height:23px; border-radius:7px; background:var(--card2);
+    border:1px solid var(--line); color:var(--accent); font-weight:800; font-size:12.5px;
+    display:flex; align-items:center; justify-content:center; margin-top:1px;}
+  .li b{color:var(--txt); font-weight:700;}
+  .li span{color:var(--sub);}
+
+  .tag{display:inline-block; font-size:12px; font-weight:700; padding:4px 10px;
+    border-radius:999px; margin:0 6px 6px 0;}
+  .t-up{background:rgba(255,91,91,.13); color:var(--up); border:1px solid rgba(255,91,91,.3);}
+  .t-down{background:rgba(61,139,255,.13); color:var(--down); border:1px solid rgba(61,139,255,.3);}
+
+  /* stock table */
+  .tbl{width:100%; border-collapse:collapse; margin-top:6px; font-size:13.5px;}
+  .tbl th{color:var(--sub); font-weight:600; font-size:11.5px; text-align:right;
+    padding:7px 4px; border-bottom:1px solid var(--line);}
+  .tbl th:first-child{text-align:left;}
+  .tbl td{padding:10px 4px; border-bottom:1px solid var(--line); text-align:right; font-weight:700;}
+  .tbl td:first-child{text-align:left;}
+  .tbl tr:last-child td{border-bottom:none;}
+  .tbl a{color:var(--txt); text-decoration:none; font-weight:700;}
+  .tbl a:hover{color:var(--accent); text-decoration:underline;}
+  .tbl .sm{display:block; color:var(--sub); font-weight:500; font-size:11px; margin-top:1px;}
+  .tbl .px{color:var(--txt); font-weight:700;}
+
+  .pick{background:var(--card2); border:1px solid var(--line); border-radius:16px;
+    padding:14px 15px; margin-top:12px;}
+  .pick .ph{display:flex; justify-content:space-between; align-items:center; margin-bottom:7px;}
+  .pick .pn{font-size:15.5px; font-weight:800;}
+  .pick .pn a{color:var(--txt); text-decoration:none;}
+  .pick .pn a:hover{color:var(--accent); text-decoration:underline;}
+  .pick .pn small{font-size:12px; color:var(--sub); font-weight:500; margin-left:6px;}
+  .pick .pt{font-size:11.5px; font-weight:700; color:var(--gold); border:1px solid rgba(255,200,97,.35);
+    background:rgba(255,200,97,.1); padding:3px 9px; border-radius:999px; white-space:nowrap;}
+  .pick .prc{display:flex; gap:14px; font-size:11.5px; color:var(--sub); margin-bottom:6px;}
+  .pick .prc b{color:var(--txt); font-weight:700;}
+  .pick .pr{font-size:12.5px; color:var(--sub); line-height:1.55;}
+  .pick .etf .pt{color:var(--teal); border-color:rgba(39,224,179,.35); background:rgba(39,224,179,.1);}
+
+  .disc{font-size:12px; color:var(--sub); line-height:1.65; background:var(--card2);
+    border:1px solid var(--line); border-radius:14px; padding:14px 15px; margin-top:6px;}
+  .cta{font-size:19px; font-weight:800; line-height:1.4; margin-top:14px;}
+  .cta .hl{color:var(--teal);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="hint">📲 인스타·SNS 업로드용 카드 10장 · 각 카드를 캡처해 사용하세요<br>(영상 제작 전 검수용 자료 · 종목명 클릭 시 네이버증권으로 이동)</p>
+
+  <!-- 1 표지 -->
+  <section class="card cover">
+    <span class="pagenum">01 / 10</span>
+    <div class="body">
+      <p class="date">2026. 06. 17 (수) · 정규장 (장중 기준)</p>
+      <p class="big">한국증시<br>마감 브리핑</p>
+    </div>
+    <div class="oneline">코스피 <b>8,800선 사상 최고권</b> · 밤사이 <b>반도체(SOX +5.87%)</b> 랠리에 HBM 대형주 견인, 외국인 매도는 개인이 방어</div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓 · 구독자와 함께하는 시황</div>
+  </section>
+
+  <!-- 2 지수 -->
+  <section class="card">
+    <span class="pagenum">02 / 10</span>
+    <div class="body">
+      <p class="kicker">오늘의 지수</p>
+      <div class="idx">
+        <div class="idxbox">
+          <p class="nm">KOSPI</p>
+          <p class="vl">8,801.5</p>
+          <p class="ch up">▲ +0.15% (전일 8,788.4)</p>
+        </div>
+        <div class="idxbox">
+          <p class="nm">KOSDAQ</p>
+          <p class="vl">1,026.0</p>
+          <p class="ch down">약보합</p>
+        </div>
+      </div>
+      <div class="fxrow"><span>원/달러 환율</span><b class="down">1,526.7원 (▲ 원화 약세)</b></div>
+      <div class="fxrow"><span>필라델피아 반도체(SOX)</span><b class="up">13,726 (+5.87%)</b></div>
+      <p class="sub" style="margin-top:14px;">사상 최고권에서 보합권 등락. 밤사이 미 반도체 급등이 삼성전자·SK하이닉스 등 HBM 대형주를 끌어올리며 지수 하단을 지지. 원화 약세(1,520원대)는 수출주엔 우호적.</p>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 3 수급 -->
+  <section class="card">
+    <span class="pagenum">03 / 10</span>
+    <div class="body">
+      <p class="kicker">오늘의 수급</p>
+      <p class="title">외국인은 팔고<br><span class="hl">개인이 받친다</span></p>
+      <div class="li"><span class="n">개</span><span><b>개인 순매수</b> — 삼전·하이닉스 등 반도체 대형주 저가 매수로 지수 방어의 핵심 주체</span></div>
+      <div class="li"><span class="n">외</span><span><b>외국인 순매도</b> — 연초 이후 누적 100조원대 매도 지속, 환율(원화 약세) 부담이 매도 유인</span></div>
+      <div class="li"><span class="n">기</span><span><b>기관 중립~매도</b> — 사상 최고권 차익 실현과 비중 조절</span></div>
+      <p class="sub" style="margin-top:14px;">👉 8,800선 안착 여부는 결국 <b>외국인 매도 강도 완화</b>에 달림.</p>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 4 국내뉴스 -->
+  <section class="card">
+    <span class="pagenum">04 / 10</span>
+    <div class="body">
+      <p class="kicker">시장을 움직인 국내 뉴스</p>
+      <div class="li"><span class="n">1</span><span><b>코스피 8,800선 사상 최고권</b> — 한국 증시 시가총액 세계 6위권 부각, 'K-증시 레벨업' 기대 지속</span></div>
+      <div class="li"><span class="n">2</span><span><b>원익IPS 투자의견 상향 흐름</b> — 반도체 장비 업황 기대에 소부장 투자심리 개선</span></div>
+      <div class="li"><span class="n">3</span><span><b>원/달러 1,520원대</b> — 환율 부담 vs 수출주 수혜, 외국인 수급에 양날의 검</span></div>
+      <div class="li"><span class="n">4</span><span><b>은행株 소외</b> — 증시 랠리에서 소외됐으나 하반기 금리 모멘텀으로 반등 기회 모색</span></div>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 5 해외뉴스 -->
+  <section class="card">
+    <span class="pagenum">05 / 10</span>
+    <div class="body">
+      <p class="kicker">국내에 영향 준 해외 뉴스</p>
+      <div class="li"><span class="n">1</span><span><b>필라델피아 반도체(SOX) +5.87%</b> — AI·HBM 수요로 사상 최장 연속 상승, YoY +150% 랠리</span></div>
+      <div class="li"><span class="n">2</span><span><b>엔비디아·마이크론 강세</b> — 마이크론 +10%대 급등 등 메모리 사이클 기대가 K-반도체로 전이</span></div>
+      <div class="li"><span class="n">3</span><span><b>글로벌 반도체 지출 1.3조달러 전망</b> — 2026년 전년比 +64%, AI 데이터센터 투자 확대</span></div>
+      <div class="li"><span class="n">4</span><span><b>뉴욕증시 강보합</b> — 다우 +0.45% 등 위험선호 유지, 환율·금리는 변수</span></div>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 6 코스피 종목 -->
+  <section class="card">
+    <span class="pagenum">06 / 10</span>
+    <div class="body">
+      <p class="kicker">코스피 주요 종목</p>
+      <table class="tbl">
+        <tr><th>종목</th><th>등락률</th><th>등락폭</th><th>종가(원)</th></tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=000660" target="_blank">SK하이닉스<span class="sm">HBM·000660</span></a></td>
+          <td class="up">+2.8%</td><td class="up">+64,000</td><td class="px">2,360,000</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=005930" target="_blank">삼성전자<span class="sm">반도체·005930</span></a></td>
+          <td class="up">+1.7%</td><td class="up">+6,000</td><td class="px">360,500</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=009150" target="_blank">삼성전기<span class="sm">MLCC·009150</span></a></td>
+          <td class="up">+1.2%</td><td class="up">+21,000</td><td class="px">1,813,000</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=066570" target="_blank">LG전자<span class="sm">가전·066570</span></a></td>
+          <td class="sub">보합</td><td class="sub">0</td><td class="px">392,500</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=035420" target="_blank">NAVER<span class="sm">인터넷·035420</span></a></td>
+          <td class="down">-0.4%</td><td class="down">-1,000</td><td class="px">280,500</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=011780" target="_blank">금호석유<span class="sm">화학·011780</span></a></td>
+          <td class="down">-0.6%</td><td class="down">-800</td><td class="px">128,100</td>
+        </tr>
+      </table>
+      <p class="sub" style="margin-top:12px;">👉 반도체 대형주가 지수를 끌고, 내수·화학은 숨 고르기.</p>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 7 코스닥 종목 -->
+  <section class="card">
+    <span class="pagenum">07 / 10</span>
+    <div class="body">
+      <p class="kicker">코스닥 주요 종목</p>
+      <p class="sub" style="margin-bottom:6px;">반도체 소부장·장비 중심 강세. AI·HBM 밸류체인으로 수급 순환.</p>
+      <table class="tbl">
+        <tr><th>종목</th><th>등락률</th><th>등락폭</th><th>종가(원)</th></tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=042700" target="_blank">한미반도체<span class="sm">HBM 본더·042700</span></a></td>
+          <td class="up">+4.5%</td><td class="up">▲</td><td class="px">장중강세</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=240810" target="_blank">원익IPS<span class="sm">장비·240810</span></a></td>
+          <td class="up">+3.2%</td><td class="up">▲</td><td class="px">투자의견↑</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=058470" target="_blank">리노공업<span class="sm">테스트핀·058470</span></a></td>
+          <td class="up">+2.1%</td><td class="up">▲</td><td class="px">강세</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=403870" target="_blank">HPSP<span class="sm">장비·403870</span></a></td>
+          <td class="down">-1.5%</td><td class="down">▼</td><td class="px">차익실현</td>
+        </tr>
+      </table>
+      <p class="sub" style="margin-top:10px;">👉 장비·소부장 순환매. 단기 변동성 유의.</p>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 8 주도 테마 -->
+  <section class="card">
+    <span class="pagenum">08 / 10</span>
+    <div class="body">
+      <p class="kicker">오늘의 주도 테마</p>
+      <p class="title" style="margin-bottom:14px;">돈이 몰린 곳은<br><span class="hl">반도체·HBM·AI전력</span></p>
+      <div>
+        <span class="tag t-up">반도체
