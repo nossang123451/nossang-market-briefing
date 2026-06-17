@@ -99,6 +99,22 @@
   .cta{font-size:19px; font-weight:800; line-height:1.4; margin-top:14px;}
   .cta .hl{color:var(--teal);}
   .note{font-size:11px; color:var(--sub); margin-top:8px; line-height:1.5;}
+
+  /* swing theme-group table (노션 본문 양식과 동일 구성) */
+  .swt{width:100%; border-collapse:collapse; margin:4px 0 2px; font-size:10.5px;}
+  .swt th{color:var(--sub); font-weight:600; font-size:9.5px; text-align:center;
+    padding:5px 3px; border-bottom:1px solid var(--line);}
+  .swt th:first-child,.swt th:last-child{text-align:left;}
+  .swt td{padding:7px 3px; border-bottom:1px solid var(--line); text-align:center;
+    font-weight:700; vertical-align:top;}
+  .swt td:first-child{text-align:left;}
+  .swt td.r{color:var(--up);}
+  .swt td:last-child{text-align:left; color:var(--sub); font-weight:500; font-size:10px; line-height:1.4;}
+  .swt tr:last-child td{border-bottom:none;}
+  .swt a{color:var(--txt); text-decoration:none;}
+  .swt a:hover{color:var(--accent); text-decoration:underline;}
+  .swt .cd{display:block; color:var(--sub); font-weight:500; font-size:9px; margin-top:1px;}
+  .card.tall{aspect-ratio:auto;}
 </style>
 </head>
 <body>
@@ -189,33 +205,33 @@
     <div class="body">
       <p class="kicker">코스피 주요 종목</p>
       <table class="tbl">
-        <tr><th>종목</th><th>등락률</th><th>등락폭</th><th>종가(원)</th></tr>
+        <tr><th>종목</th><th>등락률</th><th>등락</th><th>비고</th></tr>
         <tr>
           <td><a href="https://finance.naver.com/item/main.naver?code=000660" target="_blank">SK하이닉스<span class="sm">HBM·000660</span></a></td>
-          <td class="up">+5.84%</td><td class="up">▲</td><td class="px">250만 돌파*</td>
+          <td class="up">+5.84%</td><td class="up">▲</td><td class="px">장중 250만 돌파·신고가</td>
         </tr>
         <tr>
           <td><a href="https://finance.naver.com/item/main.naver?code=402340" target="_blank">SK스퀘어<span class="sm">지주·402340</span></a></td>
-          <td class="up">+6.33%</td><td class="up">▲</td><td class="px">시총 200조*</td>
+          <td class="up">+6.33%</td><td class="up">▲</td><td class="px">시총 200조 돌파</td>
         </tr>
         <tr>
           <td><a href="https://finance.naver.com/item/main.naver?code=032830" target="_blank">삼성생명<span class="sm">보험·032830</span></a></td>
-          <td class="up">+3.71%</td><td class="up">▲</td><td class="px">강세</td>
+          <td class="up">+3.71%</td><td class="up">▲</td><td class="px">보험 강세</td>
         </tr>
         <tr>
           <td><a href="https://finance.naver.com/item/main.naver?code=005930" target="_blank">삼성전자<span class="sm">반도체·005930</span></a></td>
-          <td class="up">+1.02%</td><td class="up">▲</td><td class="px">시총 2,000조*</td>
+          <td class="up">+1.02%</td><td class="up">▲</td><td class="px">시총 2,000조</td>
         </tr>
         <tr>
           <td><a href="https://finance.naver.com/item/main.naver?code=000270" target="_blank">기아<span class="sm">자동차·000270</span></a></td>
-          <td class="down">-2.29%</td><td class="down">▼</td><td class="px">약세</td>
+          <td class="down">-2.29%</td><td class="down">▼</td><td class="px">자동차 약세</td>
         </tr>
         <tr>
           <td><a href="https://finance.naver.com/item/main.naver?code=005380" target="_blank">현대차<span class="sm">자동차·005380</span></a></td>
-          <td class="down">-3.44%</td><td class="down">▼</td><td class="px">약세</td>
+          <td class="down">-3.44%</td><td class="down">▼</td><td class="px">자동차 약세</td>
         </tr>
       </table>
-      <p class="note">* 종가·등락폭은 보도·공개자료 기준(장중 신기록 포함). 정확 수치는 네이버증권 확인.</p>
+      <p class="note">※ 등락률은 거래소 마감치, 비고는 보도·공개자료 기준(장중 신기록 포함).</p>
       <p class="sub" style="margin-top:8px;">👉 반도체·보험 강세, 자동차주는 차익 실현.</p>
     </div>
     <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
@@ -226,19 +242,4 @@
     <span class="pagenum">07 / 10</span>
     <div class="body">
       <p class="kicker">코스닥 주요 종목</p>
-      <p class="sub" style="margin-bottom:6px;">바이오·헬스케어 + 반도체 장비 동반 강세. 외국인 순매수 유입.</p>
-      <table class="tbl">
-        <tr><th>종목</th><th>등락률</th><th>등락폭</th><th>비고</th></tr>
-        <tr>
-          <td><a href="https://finance.naver.com/item/main.naver?code=950160" target="_blank">코오롱티슈진<span class="sm">바이오·950160</span></a></td>
-          <td class="up">+7.42%</td><td class="up">▲</td><td class="px">바이오 강세</td>
-        </tr>
-        <tr>
-          <td><a href="https://finance.naver.com/item/main.naver?code=196170" target="_blank">알테오젠<span class="sm">바이오·196170</span></a></td>
-          <td class="up">+5.82%</td><td class="up">▲</td><td class="px">시총 1위</td>
-        </tr>
-        <tr>
-          <td><a href="https://finance.naver.com/item/main.naver?code=028300" target="_blank">HLB<span class="sm">바이오·028300</span></a></td>
-          <td class="up">+5.07%</td><td class="up">▲</td><td class="px">강세</td>
-        </tr>
-     
+      <p class="sub" style="margin-bottom:6px;">바이오·헬스케어 + 반도체 장비 동반 강세. 외
