@@ -66,7 +66,6 @@
   .t-down{background:rgba(61,139,255,.13); color:var(--down); border:1px solid rgba(61,139,255,.3);}
   .t-gold{background:rgba(255,200,97,.12); color:var(--gold); border:1px solid rgba(255,200,97,.3);}
 
-  /* stock table */
   .tbl{width:100%; border-collapse:collapse; margin-top:6px; font-size:13.5px;}
   .tbl th{color:var(--sub); font-weight:600; font-size:11.5px; text-align:right;
     padding:7px 4px; border-bottom:1px solid var(--line);}
@@ -79,28 +78,7 @@
   .tbl .sm{display:block; color:var(--sub); font-weight:500; font-size:11px; margin-top:1px;}
   .tbl .px{color:var(--txt); font-weight:700;}
 
-  .pick{background:var(--card2); border:1px solid var(--line); border-radius:16px;
-    padding:14px 15px; margin-top:12px;}
-  .pick .ph{display:flex; justify-content:space-between; align-items:center; margin-bottom:7px;}
-  .pick .pn{font-size:15.5px; font-weight:800;}
-  .pick .pn a{color:var(--txt); text-decoration:none;}
-  .pick .pn a:hover{color:var(--accent); text-decoration:underline;}
-  .pick .pn small{font-size:12px; color:var(--sub); font-weight:500; margin-left:6px;}
-  .pick .pt{font-size:11.5px; font-weight:700; color:var(--gold); border:1px solid rgba(255,200,97,.35);
-    background:rgba(255,200,97,.1); padding:3px 9px; border-radius:999px; white-space:nowrap;}
-  .pick .prc{display:flex; gap:14px; font-size:11.5px; color:var(--sub); margin-bottom:6px; flex-wrap:wrap;}
-  .pick .prc b{color:var(--txt); font-weight:700;}
-  .pick .pr{font-size:12.5px; color:var(--sub); line-height:1.55;}
-  .pick .etf .pt{color:var(--teal); border-color:rgba(39,224,179,.35); background:rgba(39,224,179,.1);}
   .grouphd{font-size:13px; font-weight:800; color:var(--accent); margin-top:14px; letter-spacing:.3px;}
-
-  .disc{font-size:12px; color:var(--sub); line-height:1.65; background:var(--card2);
-    border:1px solid var(--line); border-radius:14px; padding:14px 15px; margin-top:6px;}
-  .cta{font-size:19px; font-weight:800; line-height:1.4; margin-top:14px;}
-  .cta .hl{color:var(--teal);}
-  .note{font-size:11px; color:var(--sub); margin-top:8px; line-height:1.5;}
-
-  /* swing theme-group table (노션 본문 양식과 동일 구성) */
   .swt{width:100%; border-collapse:collapse; margin:4px 0 2px; font-size:10.5px;}
   .swt th{color:var(--sub); font-weight:600; font-size:9.5px; text-align:center;
     padding:5px 3px; border-bottom:1px solid var(--line);}
@@ -115,6 +93,12 @@
   .swt a:hover{color:var(--accent); text-decoration:underline;}
   .swt .cd{display:block; color:var(--sub); font-weight:500; font-size:9px; margin-top:1px;}
   .card.tall{aspect-ratio:auto;}
+
+  .disc{font-size:12px; color:var(--sub); line-height:1.65; background:var(--card2);
+    border:1px solid var(--line); border-radius:14px; padding:14px 15px; margin-top:6px;}
+  .cta{font-size:19px; font-weight:800; line-height:1.4; margin-top:14px;}
+  .cta .hl{color:var(--teal);}
+  .note{font-size:11px; color:var(--sub); margin-top:8px; line-height:1.5;}
 </style>
 </head>
 <body>
@@ -192,7 +176,7 @@
     <div class="body">
       <p class="kicker">국내에 영향 준 해외 뉴스</p>
       <div class="li"><span class="n">1</span><span><b>美 FOMC(6/16~17) 결과 대기</b> — 금리 결정 임박, 개장 초 관망세가 하락 출발 배경</span></div>
-      <div class="li"><span class="n">2</span><span><b>미 반도체 강세 지속</b> — AI·HBM 수요 지속이 SK하이닉스·삼성전자 등 K-반도체로 전이</span></div>
+      <div class="li"><span class="n">2</span><span><b>미 반도체 강세 지속</b> — AI·HBM 수요가 SK하이닉스·삼성전자 등 K-반도체로 전이</span></div>
       <div class="li"><span class="n">3</span><span><b>중동 지정학(종전 기대)</b> — 전력·방산주에 영향, 한국전력·방산주 강세 재료</span></div>
       <div class="li"><span class="n">4</span><span><b>원/달러 1,510원대 고환율</b> — 외국인 수급엔 부담, 반도체·조선 등 수출주엔 우호</span></div>
     </div>
@@ -242,4 +226,139 @@
     <span class="pagenum">07 / 10</span>
     <div class="body">
       <p class="kicker">코스닥 주요 종목</p>
-      <p class="sub" style="margin-bottom:6px;">바이오·헬스케어 + 반도체 장비 동반 강세. 외
+      <p class="sub" style="margin-bottom:6px;">바이오·헬스케어 + 반도체 장비 동반 강세. 외국인 순매수 유입.</p>
+      <table class="tbl">
+        <tr><th>종목</th><th>등락률</th><th>등락</th><th>비고</th></tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=950160" target="_blank">코오롱티슈진<span class="sm">바이오·950160</span></a></td>
+          <td class="up">+7.42%</td><td class="up">▲</td><td class="px">바이오 강세</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=196170" target="_blank">알테오젠<span class="sm">바이오·196170</span></a></td>
+          <td class="up">+5.82%</td><td class="up">▲</td><td class="px">코스닥 시총 1위</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=028300" target="_blank">HLB<span class="sm">바이오·028300</span></a></td>
+          <td class="up">+5.07%</td><td class="up">▲</td><td class="px">바이오 강세</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=240810" target="_blank">원익IPS<span class="sm">반도체장비·240810</span></a></td>
+          <td class="up">+3.59%</td><td class="up">▲</td><td class="px">반도체 장비</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=403870" target="_blank">HPSP<span class="sm">장비·403870</span></a></td>
+          <td class="down">-5.28%</td><td class="down">▼</td><td class="px">장비 차익실현</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=178320" target="_blank">서진시스템<span class="sm">부품·178320</span></a></td>
+          <td class="down">-7.27%</td><td class="down">▼</td><td class="px">약세</td>
+        </tr>
+      </table>
+      <p class="sub" style="margin-top:8px;">👉 바이오로 수급 순환. 장비주는 종목별 차별화.</p>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 8 주도 테마 -->
+  <section class="card">
+    <span class="pagenum">08 / 10</span>
+    <div class="body">
+      <p class="kicker">오늘의 주도 테마</p>
+      <p class="title" style="margin-bottom:14px;">돈이 몰린 곳은<br><span class="hl">바이오·반도체·조선/방산</span></p>
+      <div>
+        <span class="tag t-up">바이오·헬스케어</span>
+        <span class="tag t-up">HBM·반도체</span>
+        <span class="tag t-up">조선·엔진</span>
+        <span class="tag t-gold">K-방산</span>
+        <span class="tag t-gold">원전·전력</span>
+        <span class="tag t-down">자동차(약세)</span>
+      </div>
+      <div class="li"><span class="n">①</span><span><b>바이오·헬스케어</b> — 생물공학 +6.71%, FDA 모멘텀(에이비엘바이오)·알테오젠 강세</span></div>
+      <div class="li"><span class="n">②</span><span><b>HBM·반도체</b> — SK하이닉스 신고가, 테크윙 HBM 검사장비 수주 등 밸류체인 확산</span></div>
+      <div class="li"><span class="n">③</span><span><b>조선·방산·전력</b> — 한화엔진 +15%, 중동 종전 기대로 한국전력·방산 순환매</span></div>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 9 스윙 종목·ETF -->
+  <section class="card tall">
+    <span class="pagenum">09 / 10</span>
+    <div class="body">
+      <p class="kicker">스윙 관심 종목·ETF (수일~수주 / 참고용)</p>
+
+      <p class="grouphd">A. 반도체·HBM 주도주</p>
+      <table class="swt">
+        <tr><th>종목</th><th>종가/등락</th><th>1M</th><th>3M</th><th>6M</th><th>선정 사유</th></tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=000660" target="_blank">SK하이닉스<span class="cd">000660</span></a></td>
+          <td>250만 돌파*<br>+5.84%</td><td class="r">+약20%</td><td class="r">+약45%</td><td class="r">+약75%</td>
+          <td>HBM 사이클 정점, 외국인 매도에도 신고가</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=042700" target="_blank">한미반도체<span class="cd">042700</span></a></td>
+          <td>강세</td><td class="r">+약15%</td><td class="r">+약30%</td><td class="r">+약55%</td>
+          <td>HBM 본딩 장비 핵심, 하이닉스 증설 수혜</td>
+        </tr>
+      </table>
+
+      <p class="grouphd">B. 바이오·헬스케어 (오늘 주도 업종)</p>
+      <table class="swt">
+        <tr><th>종목</th><th>등락</th><th>1M</th><th>3M</th><th>6M</th><th>선정 사유</th></tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=196170" target="_blank">알테오젠<span class="cd">196170</span></a></td>
+          <td class="r">+5.82%</td><td class="r">+약12%</td><td class="r">+약25%</td><td class="r">+약40%</td>
+          <td>ALT-B4 플랫폼 로열티, 업종 순환 수급</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=298380" target="_blank">에이비엘바이오<span class="cd">298380</span></a></td>
+          <td class="r">+약12%</td><td class="r">+약20%</td><td class="r">+약35%</td><td class="r">+약50%</td>
+          <td>FDA 패스트트랙 지정 호재</td>
+        </tr>
+      </table>
+
+      <p class="grouphd">C. 조선·방산·전력 (순환매)</p>
+      <table class="swt">
+        <tr><th>종목</th><th>등락</th><th>1M</th><th>3M</th><th>6M</th><th>선정 사유</th></tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=082740" target="_blank">한화엔진<span class="cd">082740</span></a></td>
+          <td class="r">+약15%</td><td class="r">+약30%</td><td class="r">+약60%</td><td class="r">+약90%</td>
+          <td>조선 랠리가 엔진주로 확산, 환율 우호</td>
+        </tr>
+      </table>
+
+      <p class="grouphd">ETF</p>
+      <table class="swt">
+        <tr><th>종목</th><th>1M</th><th>3M</th><th>6M</th><th>선정 사유</th></tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=091160" target="_blank">KODEX 반도체<span class="cd">091160</span></a></td>
+          <td class="r">+약12%</td><td class="r">+약28%</td><td class="r">+약45%</td>
+          <td>HBM·장비 밸류체인 분산</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=227540" target="_blank">TIGER 200 헬스케어<span class="cd">227540</span></a></td>
+          <td class="r">+약8%</td><td class="r">+약15%</td><td class="r">+약20%</td>
+          <td>오늘 주도 업종(바이오) 분산</td>
+        </tr>
+      </table>
+      <p class="note">* 종가·변동률은 보도·공개자료 기준 근사치이며 실제와 차이가 있을 수 있습니다.</p>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 10 마무리·면책 -->
+  <section class="card">
+    <span class="pagenum">10 / 10</span>
+    <div class="body">
+      <p class="kicker">오늘의 마무리</p>
+      <p class="cta">8,800선 안착, 키는<br><span class="hl">외국인 수급 + FOMC</span></p>
+      <p class="sub" style="margin-top:12px;">개인·기관이 외국인 매도(-9,931억)를 받아내며 지수를 끌어올림. 직전까지 매수하던 외국인이 매도로 돌아선 점, FOMC 결과가 단기 방향을 가를 변수. 주도 테마는 반도체에서 바이오·조선/방산으로 순환 확산.</p>
+      <div class="disc" style="margin-top:14px;">
+        ⚠️ <b>투자 유의</b> — 본 자료는 영상 제작 전 검수용 참고자료이며, 특정 종목의 매수·매도를 권유하는 것이 아닙니다. 수치는 보도·공개자료 기준으로 실제와 차이가 있을 수 있습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.
+      </div>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓 · 구독·좋아요·알림설정 🔔</div>
+  </section>
+
+</div>
+</body>
+</html>
