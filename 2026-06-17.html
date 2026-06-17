@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026.06.17 한국증시 마감 브리핑</title>
+<style>
+  :root{
+    --bg:#0b0e14; --card:#141a24; --card2:#1b2230;
+    --line:#27303f; --txt:#eef2f8; --sub:#9aa7bd;
+    --up:#ff5b5b; --down:#3d8bff; --gold:#ffc861; --teal:#27e0b3;
+    --accent:#5b8cff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--txt);
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    -webkit-font-smoothing:antialiased; padding:28px 14px 60px;}
+  .wrap{max-width:480px; margin:0 auto;}
+  .hint{text-align:center; color:var(--sub); font-size:12.5px; margin-bottom:18px; line-height:1.6;}
+  .card{position:relative; background:var(--card); border:1px solid var(--line);
+    border-radius:24px; padding:30px 26px; margin-bottom:18px; overflow:hidden;
+    aspect-ratio:4/5; display:flex; flex-direction:column;}
+  .card::before{content:""; position:absolute; inset:0;
+    background:radial-gradient(120% 80% at 100% 0%, rgba(91,140,255,.10), transparent 55%);
+    pointer-events:none;}
+  .pagenum{position:absolute; top:18px; right:22px; font-size:12px; color:var(--sub);
+    letter-spacing:.5px; z-index:2;}
+  .kicker{font-size:12.5px; color:var(--accent); font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; margin-bottom:12px;}
+  .title{font-size:25px; font-weight:800; line-height:1.32; letter-spacing:-.4px;}
+  .title .hl{color:var(--gold);}
+  .body{position:relative; z-index:2;}
+  .sub{color:var(--sub); font-size:14px; line-height:1.7;}
+  .brand{margin-top:auto; display:flex; align-items:center; gap:9px; padding-top:18px;
+    font-size:12.5px; color:var(--sub); z-index:2;}
+  .dot{width:9px; height:9px; border-radius:50%; background:var(--teal);}
+
+  .cover{background:linear-gradient(160deg,#16203a 0%,#0c1018 70%);}
+  .cover .big{font-size:46px; font-weight:900; line-height:1.05; letter-spacing:-1px;}
+  .cover .date{font-size:15px; color:var(--gold); font-weight:700; margin-bottom:18px; letter-spacing:.5px;}
+  .cover .oneline{font-size:15.5px; color:var(--txt); line-height:1.6; margin-top:18px;
+    border-left:3px solid var(--accent); padding-left:14px;}
+
+  .idx{display:flex; gap:12px; margin:6px 0 4px;}
+  .idxbox{flex:1; background:var(--card2); border:1px solid var(--line);
+    border-radius:16px; padding:16px 14px;}
+  .idxbox .nm{font-size:13px; color:var(--sub); margin-bottom:7px;}
+  .idxbox .vl{font-size:25px; font-weight:800; letter-spacing:-.5px;}
+  .idxbox .ch{font-size:13.5px; font-weight:700; margin-top:4px;}
+  .up{color:var(--up);} .down{color:var(--down);}
+  .fxrow{margin-top:14px; background:var(--card2); border:1px solid var(--line);
+    border-radius:14px; padding:13px 16px; display:flex; justify-content:space-between;
+    align-items:center; font-size:14px;}
+  .fxrow b{font-size:16px; font-weight:800;}
+
+  .li{display:flex; gap:11px; margin-top:14px; font-size:14.5px; line-height:1.55;}
+  .li .n{flex:0 0 auto; width:23px; height:23px; border-radius:7px; background:var(--card2);
+    border:1px solid var(--line); color:var(--accent); font-weight:800; font-size:12.5px;
+    display:flex; align-items:center; justify-content:center; margin-top:1px;}
+  .li b{color:var(--txt); font-weight:700;}
+  .li span{color:var(--sub);}
+
+  .tag{display:inline-block; font-size:12px; font-weight:700; padding:4px 10px;
+    border-radius:999px; margin:0 6px 6px 0;}
+  .t-up{background:rgba(255,91,91,.13); color:var(--up); border:1px solid rgba(255,91,91,.3);}
+  .t-down{background:rgba(61,139,255,.13); color:var(--down); border:1px solid rgba(61,139,255,.3);}
+  .t-gold{background:rgba(255,200,97,.12); color:var(--gold); border:1px solid rgba(255,200,97,.3);}
+
+  /* stock table */
+  .tbl{width:100%; border-collapse:collapse; margin-top:6px; font-size:13.5px;}
+  .tbl th{color:var(--sub); font-weight:600; font-size:11.5px; text-align:right;
+    padding:7px 4px; border-bottom:1px solid var(--line);}
+  .tbl th:first-child{text-align:left;}
+  .tbl td{padding:10px 4px; border-bottom:1px solid var(--line); text-align:right; font-weight:700;}
+  .tbl td:first-child{text-align:left;}
+  .tbl tr:last-child td{border-bottom:none;}
+  .tbl a{color:var(--txt); text-decoration:none; font-weight:700;}
+  .tbl a:hover{color:var(--accent); text-decoration:underline;}
+  .tbl .sm{display:block; color:var(--sub); font-weight:500; font-size:11px; margin-top:1px;}
+  .tbl .px{color:var(--txt); font-weight:700;}
+
+  .pick{background:var(--card2); border:1px solid var(--line); border-radius:16px;
+    padding:14px 15px; margin-top:12px;}
+  .pick .ph{display:flex; justify-content:space-between; align-items:center; margin-bottom:7px;}
+  .pick .pn{font-size:15.5px; font-weight:800;}
+  .pick .pn a{color:var(--txt); text-decoration:none;}
+  .pick .pn a:hover{color:var(--accent); text-decoration:underline;}
+  .pick .pn small{font-size:12px; color:var(--sub); font-weight:500; margin-left:6px;}
+  .pick .pt{font-size:11.5px; font-weight:700; color:var(--gold); border:1px solid rgba(255,200,97,.35);
+    background:rgba(255,200,97,.1); padding:3px 9px; border-radius:999px; white-space:nowrap;}
+  .pick .prc{display:flex; gap:14px; font-size:11.5px; color:var(--sub); margin-bottom:6px; flex-wrap:wrap;}
+  .pick .prc b{color:var(--txt); font-weight:700;}
+  .pick .pr{font-size:12.5px; color:var(--sub); line-height:1.55;}
+  .pick .etf .pt{color:var(--teal); border-color:rgba(39,224,179,.35); background:rgba(39,224,179,.1);}
+  .grouphd{font-size:13px; font-weight:800; color:var(--accent); margin-top:14px; letter-spacing:.3px;}
+
+  .disc{font-size:12px; color:var(--sub); line-height:1.65; background:var(--card2);
+    border:1px solid var(--line); border-radius:14px; padding:14px 15px; margin-top:6px;}
+  .cta{font-size:19px; font-weight:800; line-height:1.4; margin-top:14px;}
+  .cta .hl{color:var(--teal);}
+  .note{font-size:11px; color:var(--sub); margin-top:8px; line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="hint">📲 인스타·SNS 업로드용 카드 10장 · 각 카드를 캡처해 사용하세요<br>(영상 제작 전 검수용 자료 · 종목명 클릭 시 네이버증권으로 이동)</p>
+
+  <!-- 1 표지 -->
+  <section class="card cover">
+    <span class="pagenum">01 / 10</span>
+    <div class="body">
+      <p class="date">2026. 06. 17 (수) · 정규장 마감</p>
+      <p class="big">한국증시<br>마감 브리핑</p>
+    </div>
+    <div class="oneline">코스피 <b>8,863 (+1.56%)</b> 8,800선 안착 · 외국인 매도 전환에도 <b>개인·기관 매수</b>가 방어 · <b>반도체·바이오</b> 동반 강세</div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓 · 구독자와 함께하는 시황</div>
+  </section>
+
+  <!-- 2 지수 -->
+  <section class="card">
+    <span class="pagenum">02 / 10</span>
+    <div class="body">
+      <p class="kicker">오늘의 지수</p>
+      <div class="idx">
+        <div class="idxbox">
+          <p class="nm">KOSPI</p>
+          <p class="vl">8,863.12</p>
+          <p class="ch up">▲ +136.52 (+1.56%)</p>
+        </div>
+        <div class="idxbox">
+          <p class="nm">KOSDAQ</p>
+          <p class="vl">1,031.65</p>
+          <p class="ch up">▲ +12.97 (+1.27%)</p>
+        </div>
+      </div>
+      <div class="fxrow"><span>원/달러 환율</span><b class="down">약 1,510원대 (고환율 지속)</b></div>
+      <div class="fxrow"><span>미 FOMC · 반도체</span><b class="up">6/16~17 회의 / 미 반도체 강세</b></div>
+      <p class="sub" style="margin-top:14px;">1.10% 하락 출발했으나 장중 상승 전환. FOMC 결과 대기 속 <b>반도체·바이오</b>가 끌어올리며 8,800선 안착. 원화 약세(1,510원대)는 외국인엔 부담, 수출주엔 우호.</p>
+      <p class="note">※ 환율은 보도·공개자료 기준 근사치. 지수·등락률은 거래소 마감치.</p>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 3 수급 -->
+  <section class="card">
+    <span class="pagenum">03 / 10</span>
+    <div class="body">
+      <p class="kicker">오늘의 수급 (코스피)</p>
+      <p class="title">외국인 매도 전환<br><span class="hl">개인·기관이 받친다</span></p>
+      <div class="li"><span class="n">개</span><span><b>개인 +5,431억 순매수</b> — 12~16일 3거래일 매도하다 오늘 매수 전환, 지수 방어의 핵심</span></div>
+      <div class="li"><span class="n">기</span><span><b>기관 +577억 순매수</b> — 반도체·바이오 동반 매수 가세</span></div>
+      <div class="li"><span class="n">외</span><span><b>외국인 -9,931억 순매도</b> — 직전 연속 매수에서 매도로 전환, 고환율 부담</span></div>
+      <p class="sub" style="margin-top:12px;">코스닥은 반대로 <b>외국인 +320억 순매수</b>, 개인·기관 소폭 매도.</p>
+      <p class="sub" style="margin-top:8px;">👉 8,800선 안착 지속은 <b>외국인 매도 강도</b>가 관건.</p>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 4 국내뉴스 -->
+  <section class="card">
+    <span class="pagenum">04 / 10</span>
+    <div class="body">
+      <p class="kicker">시장을 움직인 국내 뉴스</p>
+      <div class="li"><span class="n">1</span><span><b>코스피 8,863 마감·8,800선 안착</b> — 개인·기관 매수 전환으로 하락 출발 뒤집고 상승</span></div>
+      <div class="li"><span class="n">2</span><span><b>SK하이닉스 장중 250만원 돌파(+5.84%)</b> — 역대 최고가, SK스퀘어도 시총 200조 돌파(+6.33%)</span></div>
+      <div class="li"><span class="n">3</span><span><b>삼성전자 장중 시총 2,000조 돌파</b> — 국내 증시 사상 최초, 종가 +1.02%</span></div>
+      <div class="li"><span class="n">4</span><span><b>바이오·헬스케어 급등</b> — 생물공학 업종 +6.71%, 에이비엘바이오 FDA 패스트트랙 +12%</span></div>
+      <div class="li"><span class="n">5</span><span><b>조선 엔진·방산·전력 순환매</b> — 한화엔진 +15%, 한국전력 중동 종전 기대 +5%대</span></div>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 5 해외뉴스 -->
+  <section class="card">
+    <span class="pagenum">05 / 10</span>
+    <div class="body">
+      <p class="kicker">국내에 영향 준 해외 뉴스</p>
+      <div class="li"><span class="n">1</span><span><b>美 FOMC(6/16~17) 결과 대기</b> — 금리 결정 임박, 개장 초 관망세가 하락 출발 배경</span></div>
+      <div class="li"><span class="n">2</span><span><b>미 반도체 강세 지속</b> — AI·HBM 수요 지속이 SK하이닉스·삼성전자 등 K-반도체로 전이</span></div>
+      <div class="li"><span class="n">3</span><span><b>중동 지정학(종전 기대)</b> — 전력·방산주에 영향, 한국전력·방산주 강세 재료</span></div>
+      <div class="li"><span class="n">4</span><span><b>원/달러 1,510원대 고환율</b> — 외국인 수급엔 부담, 반도체·조선 등 수출주엔 우호</span></div>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 6 코스피 종목 -->
+  <section class="card">
+    <span class="pagenum">06 / 10</span>
+    <div class="body">
+      <p class="kicker">코스피 주요 종목</p>
+      <table class="tbl">
+        <tr><th>종목</th><th>등락률</th><th>등락폭</th><th>종가(원)</th></tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=000660" target="_blank">SK하이닉스<span class="sm">HBM·000660</span></a></td>
+          <td class="up">+5.84%</td><td class="up">▲</td><td class="px">250만 돌파*</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=402340" target="_blank">SK스퀘어<span class="sm">지주·402340</span></a></td>
+          <td class="up">+6.33%</td><td class="up">▲</td><td class="px">시총 200조*</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=032830" target="_blank">삼성생명<span class="sm">보험·032830</span></a></td>
+          <td class="up">+3.71%</td><td class="up">▲</td><td class="px">강세</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=005930" target="_blank">삼성전자<span class="sm">반도체·005930</span></a></td>
+          <td class="up">+1.02%</td><td class="up">▲</td><td class="px">시총 2,000조*</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=000270" target="_blank">기아<span class="sm">자동차·000270</span></a></td>
+          <td class="down">-2.29%</td><td class="down">▼</td><td class="px">약세</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=005380" target="_blank">현대차<span class="sm">자동차·005380</span></a></td>
+          <td class="down">-3.44%</td><td class="down">▼</td><td class="px">약세</td>
+        </tr>
+      </table>
+      <p class="note">* 종가·등락폭은 보도·공개자료 기준(장중 신기록 포함). 정확 수치는 네이버증권 확인.</p>
+      <p class="sub" style="margin-top:8px;">👉 반도체·보험 강세, 자동차주는 차익 실현.</p>
+    </div>
+    <div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div>
+  </section>
+
+  <!-- 7 코스닥 종목 -->
+  <section class="card">
+    <span class="pagenum">07 / 10</span>
+    <div class="body">
+      <p class="kicker">코스닥 주요 종목</p>
+      <p class="sub" style="margin-bottom:6px;">바이오·헬스케어 + 반도체 장비 동반 강세. 외국인 순매수 유입.</p>
+      <table class="tbl">
+        <tr><th>종목</th><th>등락률</th><th>등락폭</th><th>비고</th></tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=950160" target="_blank">코오롱티슈진<span class="sm">바이오·950160</span></a></td>
+          <td class="up">+7.42%</td><td class="up">▲</td><td class="px">바이오 강세</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=196170" target="_blank">알테오젠<span class="sm">바이오·196170</span></a></td>
+          <td class="up">+5.82%</td><td class="up">▲</td><td class="px">시총 1위</td>
+        </tr>
+        <tr>
+          <td><a href="https://finance.naver.com/item/main.naver?code=028300" target="_blank">HLB<span class="sm">바이오·028300</span></a></td>
+          <td class="up">+5.07%</td><td class="up">▲</td><td class="px">강세</td>
+        </tr>
+     
