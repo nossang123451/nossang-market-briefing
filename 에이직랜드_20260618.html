@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>에이직랜드(445090) 주식 분석 대시보드 | 2026.06.18</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.12.7/Recharts.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#07091A;font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif;color:#E8EAFF}
+  ::-webkit-scrollbar{height:4px;width:4px}
+  ::-webkit-scrollbar-track{background:#0E1230}
+  ::-webkit-scrollbar-thumb{background:#FF0090;border-radius:2px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {
+  AreaChart,Area,BarChart,Bar,LineChart,Line,
+  XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer,
+  RadarChart,Radar,PolarGrid,PolarAngleAxis,PolarRadiusAxis,
+  Legend,ReferenceLine,ComposedChart
+} = Recharts;
+const {useState,useEffect} = React;
+
+const C={
+  bg:"#07091A",panel:"#0E1230",border:"#1E2550",
+  mg:"#FF0090",mgDim:"#AA0060",cyan:"#00E5FF",
+  gold:"#FFD700",green:"#00FF88",red:"#FF3355",
+  textPrimary:"#E8EAFF",textSec:"#7B82B8"
+};
+
+const TABS=[
+  {id:"overview",  icon:"📊",label:"종목개요"},
+  {id:"business",  icon:"🏭",label:"사업분석"},
+  {id:"financial", icon:"💰",label:"재무분석"},
+  {id:"compare",   icon:"🏆",label:"경쟁사비교"},
+  {id:"news",      icon:"📋",label:"수주·이슈"},
+  {id:"report",    icon:"📑",label:"증권사리포트"},
+  {id:"opinion",   icon:"⚠️", label:"투자의견"},
+  {id:"technical", icon:"📈",label:"기술적분석"},
+];
+
+const STATIC={
+  price:30150,change:-1450,changePct:-4.59,
+  open:31400,high:31950,low:29950,
+  mktcap:"3,294억",vol:"58,420",
+  hi52:35900,lo52:23500,
+  eps:-1927,shares:"1,093만주",employees:244
+};
+
+const quarterlyData=[
+  {q:"24Q1",rev:10.2,op:-5.8},{q:"24Q2",rev:13.4,op:-6.1},
+  {q:"24Q3",rev:15.0,op:-5.5},{q:"24Q4",rev:22.8,op:-8.2},
+  {q:"25Q1",rev:14.7,op:-5.2},{q:"25Q2",rev:16.2,op:-4.5},
+  {q:"25Q3",rev:26.2,op:-9.9},{q:"25Q4",rev:54.0,op:-3.0},
+];
+
+const priceData=[
+  {d:"25.06",p:26500},{d:"25.07",p:28200},{d:"25.08",p:31000},
+  {d:"25.09",p:35900},{d:"25.10",p:33200},{d:"25.11",p:29800},
+  {d:"25.12",p:27300},{d:"26.01",p:28900},{d:"26.02",p:31500},
+  {d:"26.03",p:33000},{d:"26.04",p:30800},{d:"26.05",p:29900},
+  {d:"26.06",p:30150},
+];
+
+const segmentData=[
+  {name:"AI반도체",value:54,fill:C.mg},
+  {name:"Memory",  value:17,fill:C.cyan},
+  {name:"IoT/5G",  value:15,fill:C.gold},
+  {name:"Automotive",value:2,fill:C.green},
+  {name:"기타",    value:12,fill:"#6655AA"},
+];
+
+const compData=[
+  {co:"에이직랜드",code:"445090",price:30150,chg:-4.59,pbr:5.92,roe:-48.0,mcap:"3,294억",note:"TSMC VCA 유일"},
+  {co:"가온칩스",  code:"399720",price:51100,chg:-6.58,pbr:3.20,roe: 12.5,mcap:"5,420억",note:"삼성 DSP"},
+  {co:"에이디테크",code:"200710",price:11200,chg:-2.10,pbr:1.80,roe:  8.2,mcap:"2,100억",note:"삼성 협력"},
+  {co:"코아시아",  code:"045970",price: 4650,chg:-1.50,pbr:1.10,roe:  5.5,mcap:"1,850억",note:"종합 EMS"},
+];
+
+const radarData=[
+  {axis:"TSMC관계", 에이직랜드:95,가온칩스:20},
+  {axis:"AI반도체",  에이직랜드:80,가온칩스:45},
+  {axis:"수익성",    에이직랜드:20,가온칩스:62},
+  {axis:"성장성",    에이직랜드:78,가온칩스:55},
+  {axis:"글로벌수주",에이직랜드:70,가온칩스:40},
+];
+
+const Card=({children,style={}})=>(
+  <div style={{background:C.panel,border:`1px solid ${C.border}`,borderRadius:12,
+    padding:"18px 20px",boxShadow:`0 0 20px rgba(255,0,144,0.06)`,...style}}>
+    {children}
+  </div>
+);
+
+const ST=({children})=>(
+  <div style={{fontSize:12,fontWeight:700,letterSpacing:2,color:C.mg,
+    textTransform:"uppercase",borderLeft:`3px solid ${C.mg}`,
+    paddingLeft:10,marginBottom:14}}>
+    {children}
+  </div>
+);
+
+const Badge=({children,color=C.mg})=>(
+  <span style={{background:color+"22",color,border:`1px solid ${color}44`,
+    borderRadius:4,padding:"2px 8px",fontSize:11,fontWeight:700}}>
+    {children}
+  </span>
+);
+
+const TT=({active,payload,label})=>{
+  if(!active||!payload?.length)return null;
+  return(
+    <div style={{background:"#0E1230",border:`1px solid ${C.border}`,
+      borderRadius:8,padding:"10px 14px",fontSize:12}}>
+      <div style={{color:C.textSec,marginBottom:4}}>{label}</div>
+      {payload.map((p,i)=>(
+        <div key={i} style={{color:p.color||C.mg}}>
+          {p.name}: {typeof p.value==="number"?p.value.toLocaleString():p.value}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+function OverviewTab({stock}){
+  const info=[
+    ["시가",`₩${stock.open.toLocaleString()}`],["고가",`₩${stock.high.toLocaleString()}`],
+    ["저가",`₩${stock.low.toLocaleString()}`],["거래량",stock.vol+"주"],
+    ["시가총액",stock.mktcap],["발행주식",stock.shares],
+    ["EPS",`₩${stock.eps.toLocaleString()}`],["직원수",stock.employees+"명"],
+  ];
+  return(
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+      <Card style={{gridColumn:"1/-1"}}>
+        <ST>52주 주가 흐름</ST>
+        <ResponsiveContainer width="100%" height={200}>
+          <AreaChart data={priceData}>
+            <defs>
+              <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor={C.mg} stopOpacity={0.3}/>
+                <stop offset="95%" stopColor={C.mg} stopOpacity={0}/>
+              </linearGradient>
+            </defs>
+            <CartesianGrid stroke={C.border} strokeDasharray="3 3"/>
+            <XAxis dataKey="d" tick={{fill:C.textSec,fontSize:11}}/>
+            <YAxis domain={[22000,38000]} tick={{fill:C.textSec,fontSize:11}}
+              tickFormatter={v=>`${(v/1000).toFixed(0)}K`}/>
+            <Tooltip content={<TT/>}/>
+            <ReferenceLine y={30150} stroke={C.cyan} strokeDasharray="4 4"
+              label={{value:"현재",fill:C.cyan,fontSize:11}}/>
+            <Area type="monotone" dataKey="p" name="주가" stroke={C.mg}
+              strokeWidth={2} fill="url(#pg)"/>
+          </AreaChart>
+        </ResponsiveContainer>
+        <div style={{display:"flex",gap:24,marginTop:12,fontSize:12}}>
+          <span style={{color:C.textSec}}>52주 최고 <b style={{color:C.red}}>₩{stock.hi52.toLocaleString()}</b></span>
+          <span style={{color:C.textSec}}>52주 최저 <b style={{color:C.cyan}}>₩{stock.lo52.toLocaleString()}</b></span>
+          <span style={{color:C.textSec}}>고점대비 <b style={{color:C.gold}}>
+            {(((stock.price-stock.hi52)/stock.hi52)*100).toFixed(1)}%
+          </b></span>
+        </div>
+      </Card>
+      <Card>
+        <ST>종목 기본 정보</ST>
+        <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+          <tbody>
+            {info.map(([k,v])=>(
+              <tr key={k} style={{borderBottom:`1px solid ${C.border}`}}>
+                <td style={{padding:"7px 0",color:C.textSec,width:"45%"}}>{k}</td>
+                <td style={{padding:"7px 0",color:C.textPrimary,fontWeight:600}}>{v}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
+      <Card>
+        <ST>밸류에이션 지표</ST>
+        {[
+          ["PER","N/A (적자)",C.textSec],
+          ["PBR","5.92배",C.cyan],
+          ["ROE","-48.04%",C.red],
+          ["EV/EBITDA","N/A (적자)",C.textSec],
+          ["Q1 매출성장","QoQ +106%",C.green],
+          ["영업손실추세","▼ 개선 중",C.gold],
+        ].map(([k,v,col])=>(
+          <div key={k} style={{display:"flex",justifyContent:"space-between",
+            padding:"8px 0",borderBottom:`1px solid ${C.border}`,fontSize:13}}>
+            <span style={{color:C.textSec}}>{k}</span>
+            <span style={{color:col,fontWeight:700}}>{v}</span>
+          </div>
+        ))}
+        <div style={{marginTop:12,padding:"10px 12px",background:"#FF009011",
+          borderRadius:8,border:`1px solid ${C.mgDim}`,fontSize:12,color:C.textPrimary}}>
+          ⚠️ 현재 적자이나 2026 Q1 매출 <b style={{color:C.green}}>540억 (QoQ +106%)</b> 급개선
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+function BusinessTab(){
+  return(
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+      <Card style={{gridColumn:"1/-1"}}>
+        <ST>비즈니스 모델 — TSMC VCA 디자인하우스</ST>
+        <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:16,alignItems:"center"}}>
+          {["팹리스 고객","에이직랜드(설계재구성)","TSMC(파운드리)","패키징/테스트","완제품 납품"].map((s,i)=>(
+            <div key={i} style={{display:"flex",alignItems:"center",gap:6}}>
+              {i>0&&<span style={{color:C.mg,fontSize:18,fontWeight:700}}>›</span>}
+              <div style={{
+                background:i===1?"#FF009022":"#1E2550",
+                border:`1px solid ${i===1?C.mg:C.border}`,
+                borderRadius:8,padding:"8px 14px",fontSize:12,
+                color:i===1?C.mg:C.textPrimary,fontWeight:i===1?700:400
+              }}>{s}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{fontSize:13,color:C.textSec,lineHeight:1.7}}>
+          에이직랜드는 팹리스 기업의 반도체를 TSMC 공정에 최적화하여 재설계하는
+          <b style={{color:C.textPrimary}}> 국내 유일 TSMC VCA(Value Chain Associate)</b>.
+          전세계 8개사 중 유일한 한국 기업. 2019년부터 파트너십 유지.
+        </div>
+      </Card>
+      <Card>
+        <ST>응용처별 매출 비중</ST>
+        {segmentData.map(s=>(
+          <div key={s.name} style={{marginBottom:10}}>
+            <div style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:4}}>
+              <span style={{color:C.textPrimary}}>{s.name}</span>
+              <span style={{color:s.fill,fontWeight:700}}>{s.value}%</span>
+            </div>
+            <div style={{height:6,background:C.border,borderRadius:3}}>
+              <div style={{height:"100%",width:`${s.value}%`,
+                background:`linear-gradient(90deg,${s.fill},${s.fill}88)`,borderRadius:3}}/>
+            </div>
+          </div>
+        ))}
+        <div style={{marginTop:14,padding:"10px",background:"#00E5FF11",
+          borderRadius:8,border:`1px solid #00E5FF44`,fontSize:12,color:C.textPrimary}}>
+          🤖 AI 반도체 <b style={{color:C.cyan}}>54%</b> — HBM·CXL·뉴로모픽 수요 핵심 수혜
+        </div>
+      </Card>
+      <Card>
+        <ST>섹터 동향</ST>
+        {[
+          ["🌐 글로벌 AI 반도체","엔비디아 Blackwell 수요 급증, 커스텀 AI칩 확산"],
+          ["🏭 파운드리 수혜","TSMC N3/N2 공정 수요 폭발, 직접 수혜"],
+          ["💾 CXL 시장","SK하이닉스 협력으로 차세대 메모리 인터페이스 선점"],
+          ["🌏 말레이시아","후공정 핵심 허브, 신규 고객 발굴 완료"],
+          ["🧠 뉴로모픽 AI","BrainChip 협력, 엣지 AI 반도체 개발 진입"],
+        ].map(([t,d])=>(
+          <div key={t} style={{padding:"10px 12px",marginBottom:8,
+            background:"#1E2550",borderRadius:8,fontSize:12}}>
+            <div style={{color:C.mg,fontWeight:700,marginBottom:3}}>{t}</div>
+            <div style={{color:C.textSec}}>{d}</div>
+          </div>
+        ))}
+      </Card>
+      <Card style={{gridColumn:"1/-1"}}>
+        <ST>밸류체인 생태계</ST>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
+          {[
+            {tier:"상류 (EDA/IP)",items:["시놉시스","케이던스","ARM IP"],hl:false},
+            {tier:"에이직랜드 (핵심)",items:["설계재구성","DFM 최적화","턴키솔루션"],hl:true},
+            {tier:"파운드리",items:["TSMC (유일 VCA)","N3/N4/N5 공정","CoWoS 패키징"],hl:false},
+            {tier:"주요 고객",items:["SK하이닉스","글로벌 팹리스","BrainChip","말레이시아"],hl:false},
+          ].map(({tier,items,hl})=>(
+            <div key={tier} style={{border:`1px solid ${hl?C.mg:C.border}`,
+              borderRadius:10,padding:"12px 14px",background:hl?"#FF009015":"#0E1230"}}>
+              <div style={{fontSize:11,fontWeight:700,color:hl?C.mg:C.textSec,
+                marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>{tier}</div>
+              {items.map(i=>(
+                <div key={i} style={{fontSize:12,color:hl?C.textPrimary:C.textSec,
+                  padding:"3px 0",borderBottom:`1px solid ${C.border}`}}>• {i}</div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+function FinancialTab(){
+  return(
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+      <Card style={{gridColumn:"1/-1"}}>
+        <ST>분기별 매출 & 영업손익 (십억원)</ST>
+        <ResponsiveContainer width="100%" height={220}>
+          <BarChart data={quarterlyData} barGap={4}>
+            <CartesianGrid stroke={C.border} strokeDasharray="3 3"/>
+            <XAxis dataKey="q" tick={{fill:C.textSec,fontSize:11}}/>
+            <YAxis tick={{fill:C.textSec,fontSize:11}}/>
+            <Tooltip content={<TT/>}/>
+            <Legend wrapperStyle={{color:C.textSec,fontSize:12}}/>
+            <ReferenceLine y={0} stroke={C.border}/>
+            <Bar dataKey="rev" name="매출" fill={C.cyan} radius={[4,4,0,0]}/>
+            <Bar dataKey="op"  name="영업손익" fill={C.mg} radius={[4,4,0,0]}/>
+          </BarChart>
+        </ResponsiveContainer>
+        <div style={{marginTop:10,padding:"10px 14px",background:"#00FF8811",
+          borderRadius:8,border:`1px solid #00FF8844`,fontSize:12,color:C.textPrimary}}>
+          🚀 2026 Q1 매출 <b style={{color:C.green}}>540억</b> — QoQ <b style={{color:C.green}}>+106%</b> 폭증.
+          SK하이닉스 CXL 310억 + 스토리지컨트롤러 254억 반영
+        </div>
+      </Card>
+      <Card>
+        <ST>손익 요약 (2025년 연간)</ST>
+        {[
+          ["매출액","728억원",C.cyan],
+          ["매출원가","약 560억원",C.textSec],
+          ["매출총이익","168억원",C.gold],
+          ["영업손실","-276억원",C.red],
+          ["순손실","약 -211억원",C.red],
+          ["EBITDA","약 -250억원",C.textSec],
+        ].map(([k,v,col])=>(
+          <div key={k} style={{display:"flex",justifyContent:"space-between",
+            padding:"8px 0",borderBottom:`1px solid ${C.border}`,fontSize:13}}>
+            <span style={{color:C.textSec}}>{k}</span>
+            <span style={{color:col,fontWeight:700}}>{v}</span>
+          </div>
+        ))}
+      </Card>
+      <Card>
+        <ST>재무 건전성</ST>
+        {[
+          ["현금성자산","약 200억+",C.green,70],
+          ["부채비율","보통",C.gold,55],
+          ["자본적정성","IPO 자금 소진",C.red,35],
+          ["유동비율","적정",C.cyan,62],
+          ["R&D투자","매출대비 고비율",C.mg,80],
+        ].map(([k,v,col,pct])=>(
+          <div key={k} style={{marginBottom:12}}>
+            <div style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:4}}>
+              <span style={{color:C.textSec}}>{k}</span>
+              <span style={{color:col,fontWeight:700}}>{v}</span>
+            </div>
+            <div style={{height:4,background:C.border,borderRadius:2}}>
+              <div style={{height:"100%",width:`${pct}%`,background:col,borderRadius:2}}/>
+            </div>
+          </div>
+        ))}
+        <div style={{marginTop:8,padding:"10px",background:"#FFD70011",
+          borderRadius:8,border:`1px solid #FFD70044`,fontSize:12,color:C.textSec}}>
+          ⚡ 선제적 R&D 투자 → 2026년 양산 전환. 흑자 전환 시점이 핵심 촉매
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+function CompareTab(){
+  return(
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+      <Card style={{gridColumn:"1/-1"}}>
+        <ST>국내 디자인하우스 비교</ST>
+        <div style={{overflowX:"auto"}}>
+          <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+            <thead>
+              <tr style={{borderBottom:`2px solid ${C.mg}`}}>
+                {["종목","코드","현재가","등락률","PBR","ROE","시가총액","특징"].map(h=>(
+                  <th key={h} style={{padding:"10px 8px",textAlign:"left",
+                    color:C.mg,fontWeight:700,fontSize:11,letterSpacing:1,whiteSpace:"nowrap"}}>
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {compData.map((r,i)=>(
+                <tr key={r.co} style={{borderBottom:`1px solid ${C.border}`,
+                  background:i===0?"#FF009010":"transparent"}}>
+                  <td style={{padding:"10px 8px",color:i===0?C.mg:C.textPrimary,fontWeight:i===0?700:400}}>
+                    {i===0?"★ ":""}{r.co}
+                  </td>
+                  <td style={{padding:"10px 8px",color:C.textSec}}>{r.code}</td>
+                  <td style={{padding:"10px 8px",color:C.textPrimary,fontWeight:600}}>
+                    ₩{r.price.toLocaleString()}
+                  </td>
+                  <td style={{padding:"10px 8px"}}>
+                    <span style={{color:r.chg>=0?C.red:C.cyan}}>
+                      {r.chg>=0?"▲":"▼"}{Math.abs(r.chg)}%
+                    </span>
+                  </td>
+                  <td style={{padding:"10px 8px",color:C.textPrimary}}>{r.pbr}x</td>
+                  <td style={{padding:"10px 8px",color:r.roe<0?C.red:C.green}}>{r.roe}%</td>
+                  <td style={{padding:"10px 8px",color:C.textSec}}>{r.mcap}</td>
+                  <td style={{padding:"10px 8px"}}>
+                    <Badge color={i===0?C.mg:C.cyan}>{r.note}</Badge>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+      <Card>
+        <ST>역량 비교 — 에이직랜드 vs 가온칩스</ST>
+        <ResponsiveContainer width="100%" height={220}>
+          <RadarChart data={radarData}>
+            <PolarGrid stroke={C.border}/>
+            <PolarAngleAxis dataKey="axis" tick={{fill:C.textSec,fontSize:11}}/>
+            <PolarRadiusAxis domain={[0,100]} tick={false} axisLine={false}/>
+            <Radar name="에이직랜드" dataKey="에이직랜드" stroke={C.mg}
+              fill={C.mg} fillOpacity={0.25}/>
+            <Radar name="가온칩스" dataKey="가온칩스" stroke={C.cyan}
+              fill={C.cyan} fillOpacity={0.15}/>
+            <Legend wrapperStyle={{color:C.textSec,fontSize:11}}/>
+          </RadarChart>
+        </ResponsiveContainer>
+      </Card>
+      <Card>
+        <ST>글로벌 VCA 8개사</ST>
+        {[
+          ["GUC (대만)","TSMC 최대 VCA, 첨단공정 독점",C.gold],
+          ["알칩 (대만)","모바일·AI 특화",C.cyan],
+          ["알파웨이브 (미국)","고속인터페이스 IP 특화",C.green],
+          ["에이직랜드 (한국)","유일 한국 VCA, 급성장",C.mg],
+          ["차이나IC (중국)","중국 시장 특화","#AA88FF"],
+          ["토판 (일본)","일본 시장 특화","#6688AA"],
+        ].map(([n,d,col])=>(
+          <div key={n} style={{padding:"8px 0",borderBottom:`1px solid ${C.border}`,fontSize:12}}>
+            <div style={{color:col,fontWeight:700}}>{n}</div>
+            <div style={{color:C.textSec,fontSize:11}}>{d}</div>
+          </div>
+        ))}
+      </Card>
+    </div>
+  );
+}
+
+function NewsTab(){
+  const news=[
+    {date:"2026.06",tag:"수주",color:C.green,
+     title:"SK하이닉스 CXL 반도체 설계 계약 310억",
+     body:"CXL(Compute Express Link) 적용 주문형 반도체 설계. 매출액 대비 41.9%. 차세대 메모리 인터페이스 시장 선점."},
+    {date:"2026.02",tag:"신사업",color:C.cyan,
+     title:"BrainChip 뉴로모픽 AI 반도체 개발 계약",
+     body:"글로벌 뉴로모픽 AI 반도체 기업 BrainChip과 신규 개발 계약. 저전력 엣지 AI 추론 칩 공동개발."},
+    {date:"2026.02",tag:"수주",color:C.green,
+     title:"말레이시아 신규 고객 계약 체결",
+     body:"후공정 핵심 허브 말레이시아 소재 고객사 신규 계약. 동남아 거점 확보. 글로벌 공급망 다변화."},
+    {date:"2026.01",tag:"양산",color:C.gold,
+     title:"스토리지 컨트롤러 양산 계약 254억원",
+     body:"연초 첫 대형 양산 계약. 개발→양산 전환 신호탄. 매출 본격화 시작점."},
+    {date:"2025.11",tag:"IR",color:C.mg,
+     title:"2026년 역대 최대 실적 자신감 피력",
+     body:"이종민 CEO: 북미·말레이시아 고객 확보, 양산 매출 전환 가속화. 매출 1천억 목표."},
+  ];
+  return(
+    <div style={{display:"flex",flexDirection:"column",gap:12}}>
+      <Card>
+        <ST>2026 수주 현황</ST>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
+          {[["CXL 계약","310억",C.green],["스토리지컨트롤러","254억",C.cyan],["뉴로모픽+기타","수십억+",C.mg]]
+            .map(([k,v,col])=>(
+            <div key={k} style={{textAlign:"center",padding:"16px",background:"#1E2550",
+              borderRadius:10,border:`1px solid ${col}44`}}>
+              <div style={{fontSize:11,color:C.textSec,marginBottom:6}}>{k}</div>
+              <div style={{fontSize:22,fontWeight:800,color:col}}>{v}</div>
+            </div>
+          ))}
+        </div>
+      </Card>
+      {news.map((n,i)=>(
+        <Card key={i}>
+          <div style={{display:"flex",alignItems:"flex-start",gap:12}}>
+            <div style={{minWidth:60,textAlign:"center"}}>
+              <div style={{fontSize:10,color:C.textSec,marginBottom:4}}>{n.date}</div>
+              <Badge color={n.color}>{n.tag}</Badge>
+            </div>
+            <div>
+              <div style={{fontSize:14,fontWeight:700,color:C.textPrimary,marginBottom:6}}>{n.title}</div>
+              <div style={{fontSize:12,color:C.textSec,lineHeight:1.6}}>{n.body}</div>
+            </div>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+function ReportTab(){
+  const reports=[
+    {firm:"한국IR협의회",date:"2024.12.02",rating:"분석대상",
+     summary:"TSMC 생태계 대표 수혜주. AI 반도체 설계 수요 증가로 수주 파이프라인 확대. 2025-26년 양산 전환 시 흑자 전환 기대.",
+     key:["TSMC VCA 희소성","AI 54% 비중","양산 계약 증가"]},
+    {firm:"더벨",date:"2024.09",rating:"긍정적",
+     summary:"IPO 1년 후 평가: TSMC 국내 유일 파트너 지위 공고. 글로벌 AI 수요 확장으로 중장기 성장 기대.",
+     key:["TSMC 지위 공고화","글로벌 고객 다변화","중장기 성장주"]},
+    {firm:"디일렉",date:"2026.05",rating:"관심",
+     summary:"미국 시장 진출 + IP 사업 본격화 주목. 2026년 흑자전환 여부가 핵심 모멘텀.",
+     key:["미국시장 진출","IP 사업 병행","흑전 가능성"]},
+  ];
+  return(
+    <div style={{display:"flex",flexDirection:"column",gap:14}}>
+      {reports.map((r,i)=>(
+        <Card key={i}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+            <div>
+              <span style={{fontSize:15,fontWeight:700,color:C.textPrimary}}>{r.firm}</span>
+              <span style={{fontSize:12,color:C.textSec,marginLeft:10}}>{r.date}</span>
+            </div>
+            <Badge color={r.rating==="매수"?C.green:r.rating==="긍정적"?C.cyan:C.gold}>{r.rating}</Badge>
+          </div>
+          <div style={{fontSize:13,color:C.textSec,lineHeight:1.7,marginBottom:12}}>{r.summary}</div>
+          <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+            {r.key.map(k=>(
+              <span key={k} style={{background:"#1E2550",border:`1px solid ${C.border}`,
+                borderRadius:4,padding:"3px 10px",fontSize:11,color:C.textSec}}>#{k}</span>
+            ))}
+          </div>
+        </Card>
+      ))}
+      <Card>
+        <ST>커버리지 주의</ST>
+        <div style={{fontSize:13,color:C.textSec,lineHeight:1.7}}>
+          코스닥 중소형주로 <b style={{color:C.textPrimary}}>공식 증권사 투자의견/목표주가 커버리지 제한적</b>.
+          IR 자료·언론 분석 중심. 컨센서스 데이터 부재를 투자 판단에 반영 필요.
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+function OpinionTab(){
+  return(
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+      <Card>
+        <ST>🟢 장기 투자 포인트</ST>
+        {[
+          ["TSMC 유일 한국 VCA","전세계 8개사 중 유일. 대체 불가 희소성.",3],
+          ["AI 반도체 구조적 수혜","커스텀 AI칩 수요 폭발. 매출 54% AI향.",3],
+          ["SK하이닉스 CXL 연대","차세대 메모리 인터페이스 핵심 협력.",2],
+          ["글로벌 확장","북미+말레이시아 고객 확보 완료.",2],
+          ["2026 양산 전환","개발→양산 본격화. 이익률 개선 기대.",3],
+        ].map(([t,d,stars])=>(
+          <div key={t} style={{padding:"10px 12px",marginBottom:8,
+            background:"#00FF8808",borderRadius:8,border:`1px solid #00FF8822`}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
+              <span style={{fontSize:13,fontWeight:700,color:C.green}}>{t}</span>
+              <span style={{color:C.gold}}>{"★".repeat(stars)}</span>
+            </div>
+            <div style={{fontSize:12,color:C.textSec}}>{d}</div>
+          </div>
+        ))}
+      </Card>
+      <Card>
+        <ST>🔴 리스크 & 유의사항</ST>
+        {[
+          ["적자 지속","2025년 영업손실 276억. 흑전 시기 불확실.","high"],
+          ["고객 집중 리스크","대형 고객 일정 변경 시 변동성 확대.","high"],
+          ["TSMC 의존성","TSMC 정책·가격 변화에 직접 영향.","mid"],
+          ["지정학 리스크","미-중 갈등, 대만 긴장 시 파운드리 차질.","mid"],
+          ["소형주 유동성","일평균 거래량 13만주. 급등락 주의.","mid"],
+          ["경쟁 심화","중국 디자인하우스 원가경쟁 우려.","low"],
+        ].map(([t,d,lv])=>(
+          <div key={t} style={{padding:"10px 12px",marginBottom:8,background:"#FF335508",
+            borderRadius:8,border:`1px solid ${lv==="high"?"#FF335544":lv==="mid"?"#FFD70033":"#6688AA33"}`}}>
+            <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
+              <span style={{fontSize:13,fontWeight:700,
+                color:lv==="high"?C.red:lv==="mid"?C.gold:"#6688AA"}}>{t}</span>
+              <Badge color={lv==="high"?C.red:lv==="mid"?C.gold:"#6688AA"}>
+                {lv==="high"?"고위험":lv==="mid"?"중위험":"저위험"}
+              </Badge>
+            </div>
+            <div style={{fontSize:12,color:C.textSec}}>{d}</div>
+          </div>
+        ))}
+      </Card>
+      <Card style={{gridColumn:"1/-1"}}>
+        <ST>투자 판단 체크리스트</ST>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
+          {[
+            {q:"단기 (3M)",items:["Q2 2026 매출 유지?","신규 수주 발표","흑자전환 시그널"],color:C.mg},
+            {q:"중기 (6-12M)",items:["연간 매출 1천억 달성?","양산 비중 확대","글로벌 고객 추가"],color:C.cyan},
+            {q:"장기 (1Y+)",items:["TSMC 관계 강화","N3/N2 공정 수주","IP 사업 수익화"],color:C.gold},
+          ].map(({q,items,color})=>(
+            <div key={q} style={{border:`1px solid ${color}44`,borderRadius:10,
+              padding:"14px",background:"#1E2550"}}>
+              <div style={{fontSize:13,fontWeight:700,color,marginBottom:10}}>{q}</div>
+              {items.map(it=>(
+                <div key={it} style={{display:"flex",alignItems:"center",gap:8,
+                  padding:"5px 0",borderBottom:`1px solid ${C.border}`,fontSize:12,color:C.textSec}}>
+                  <span style={{color,fontSize:10}}>◆</span>{it}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div style={{marginTop:16,padding:"14px",background:"#FF009015",borderRadius:10,
+          border:`1px solid ${C.mg}44`,fontSize:13,color:C.textSec,lineHeight:1.7}}>
+          ⚠️ <b style={{color:C.mg}}>투자 주의사항:</b> 본 자료는 참고용이며 투자 권유가 아닙니다.
+          현재 적자 기업으로 흑자 전환 불확실성이 존재합니다. 투자 결정은 본인 판단과 책임 하에 이루어져야 합니다.
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+function TechnicalTab(){
+  const maData=priceData.map((d,i,arr)=>{
+    const s=arr.slice(Math.max(0,i-4),i+1).map(x=>x.p);
+    return{...d,ma5:Math.round(s.reduce((a,b)=>a+b,0)/s.length)};
+  });
+  const rsi=[55,58,62,70,65,52,44,48,55,60,56,50,48];
+  const rsiData=priceData.map((d,i)=>({...d,rsi:rsi[i]||50}));
+  return(
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+      <Card style={{gridColumn:"1/-1"}}>
+        <ST>이동평균선 분석</ST>
+        <ResponsiveContainer width="100%" height={200}>
+          <LineChart data={maData}>
+            <CartesianGrid stroke={C.border} strokeDasharray="3 3"/>
+            <XAxis dataKey="d" tick={{fill:C.textSec,fontSize:11}}/>
+            <YAxis domain={[22000,38000]} tick={{fill:C.textSec,fontSize:11}}
+              tickFormatter={v=>`${(v/1000).toFixed(0)}K`}/>
+            <Tooltip content={<TT/>}/>
+            <Legend wrapperStyle={{color:C.textSec,fontSize:11}}/>
+            <Line dataKey="p" name="주가" stroke={C.mg} strokeWidth={2} dot={false}/>
+            <Line dataKey="ma5" name="MA5" stroke={C.cyan} strokeWidth={1.5}
+              dot={false} strokeDasharray="4 2"/>
+            <ReferenceLine y={30150} stroke={C.gold} strokeDasharray="3 3"/>
+          </LineChart>
+        </ResponsiveContainer>
+      </Card>
+      <Card>
+        <ST>RSI (14)</ST>
+        <ResponsiveContainer width="100%" height={160}>
+          <LineChart data={rsiData}>
+            <CartesianGrid stroke={C.border} strokeDasharray="3 3"/>
+            <XAxis dataKey="d" tick={{fill:C.textSec,fontSize:10}}/>
+            <YAxis domain={[0,100]} tick={{fill:C.textSec,fontSize:10}}/>
+            <Tooltip content={<TT/>}/>
+            <ReferenceLine y={70} stroke={C.red} strokeDasharray="4 4"
+              label={{value:"과매수",fill:C.red,fontSize:10}}/>
+            <ReferenceLine y={30} stroke={C.cyan} strokeDasharray="4 4"
+              label={{value:"과매도",fill:C.cyan,fontSize:10}}/>
+            <Line dataKey="rsi" name="RSI" stroke={C.gold} strokeWidth={2} dot={false}/>
+          </LineChart>
+        </ResponsiveContainer>
+        <div style={{marginTop:8,fontSize:12,color:C.textSec}}>
+          현재 RSI ≈ <b style={{color:C.gold}}>48</b> — 중립 영역 (30~70)
+        </div>
+      </Card>
+      <Card>
+        <ST>기술적 지표 요약</ST>
+        {[
+          ["지지선 1","₩29,500~30,000",C.cyan,"강한 지지"],
+          ["지지선 2","₩26,000~27,000",C.cyan,"하단 지지"],
+          ["저항선 1","₩31,500~32,000",C.red,"단기 저항"],
+          ["저항선 2","₩35,500~36,000",C.red,"52주 고점"],
+          ["볼린저밴드","수축 → 변동성↑",C.gold,"돌파 주목"],
+          ["MACD","데드크로스 근접",C.textSec,"단기 주의"],
+        ].map(([k,v,col,note])=>(
+          <div key={k} style={{display:"flex",justifyContent:"space-between",alignItems:"center",
+            padding:"7px 0",borderBottom:`1px solid ${C.border}`,fontSize:12}}>
+            <span style={{color:C.textSec,minWidth:80}}>{k}</span>
+            <span style={{color:col,fontWeight:600,flex:1,textAlign:"center"}}>{v}</span>
+            <Badge color={col}>{note}</Badge>
+          </div>
+        ))}
+      </Card>
+      <Card style={{gridColumn:"1/-1"}}>
+        <ST>시나리오 분석</ST>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+          <div style={{padding:"14px",background:"#00FF8810",borderRadius:10,border:`1px solid #00FF8833`}}>
+            <div style={{color:C.green,fontWeight:700,marginBottom:8}}>📈 상승 시나리오</div>
+            <div style={{fontSize:12,color:C.textSec,lineHeight:1.7}}>
+              ₩31,500 저항 돌파 + 거래량 증가 시<br/>
+              1차 목표: <b style={{color:C.green}}>₩33,500</b><br/>
+              2차 목표: <b style={{color:C.green}}>₩35,900 (52주 고점)</b><br/>
+              트리거: Q2 수주 공시, 흑자전환 발표
+            </div>
+          </div>
+          <div style={{padding:"14px",background:"#FF335510",borderRadius:10,border:`1px solid #FF335533`}}>
+            <div style={{color:C.red,fontWeight:700,marginBottom:8}}>📉 하락 시나리오</div>
+            <div style={{fontSize:12,color:C.textSec,lineHeight:1.7}}>
+              ₩29,500 지지 이탈 시<br/>
+              1차 목표: <b style={{color:C.red}}>₩27,000</b><br/>
+              2차 하방: <b style={{color:C.red}}>₩24,000~25,000</b><br/>
+              트리거: 수주 지연, 적자 확대, TSMC 이슈
+            </div>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+function App(){
+  const [tab,setTab]=useState("overview");
+  const [stock,setStock]=useState(STATIC);
+  const [fetchTime,setFetchTime]=useState("");
+
+  useEffect(()=>{
+    fetch("https://m.stock.naver.com/api/stock/445090/basic")
+      .then(r=>r.json())
+      .then(d=>{
+        if(d?.closePrice){
+          setStock(prev=>({...prev,
+            price:parseInt(d.closePrice.replace(/,/g,"")),
+            change:parseFloat(d.compareToPreviousClosePrice?.replace(/,/g,"")||"0"),
+            changePct:parseFloat(d.fluctuationsRatio||"0"),
+            high:parseInt((d.highPrice||"0").replace(/,/g,"")),
+            low:parseInt((d.lowPrice||"0").replace(/,/g,"")),
+            open:parseInt((d.openPrice||"0").replace(/,/g,"")),
+            vol:(d.accumulatedTradingVolume||"").replace(/,/g,""),
+          }));
+        }
+      })
+      .catch(()=>{})
+      .finally(()=>setFetchTime(new Date().toLocaleTimeString("ko-KR")));
+  },[]);
+
+  const isUp=stock.changePct>=0;
+
+  return(
+    <div style={{fontFamily:"'Segoe UI','Apple SD Gothic Neo',sans-serif",
+      background:C.bg,minHeight:"100vh",color:C.textPrimary}}>
+      {/* 헤더 */}
+      <div style={{background:"linear-gradient(135deg,#0E1230 0%,#15073A 100%)",
+        borderBottom:`1px solid ${C.border}`,padding:"20px 28px"}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:16}}>
+          <div>
+            <div style={{fontSize:11,letterSpacing:4,color:C.mg,fontWeight:700,marginBottom:4}}>
+              KOSDAQ · 445090 · 시스템반도체 디자인하우스
+            </div>
+            <div style={{fontSize:28,fontWeight:800,color:C.textPrimary,letterSpacing:-1}}>
+              에이직랜드
+              <span style={{fontSize:12,marginLeft:10,background:"#FF009022",
+                border:`1px solid ${C.mg}`,borderRadius:4,padding:"2px 8px",
+                color:C.mg,fontWeight:700}}>TSMC VCA</span>
+            </div>
+          </div>
+          <div style={{textAlign:"right"}}>
+            <a href="https://m.stock.naver.com/domestic/stock/445090/total"
+              target="_blank" rel="noreferrer"
+              style={{color:C.cyan,fontSize:12,textDecoration:"none",
+                border:`1px solid ${C.cyan}44`,borderRadius:6,padding:"4px 12px",display:"inline-block"}}>
+              📱 네이버 주식 →
+            </a>
+            <div style={{fontSize:10,color:C.textSec,marginTop:4}}>
+              {fetchTime?`실시간 조회: ${fetchTime}`:"2026.06.18 기준 (정적 데이터)"}
+            </div>
+          </div>
+        </div>
+        <div style={{display:"flex",gap:28,alignItems:"baseline",flexWrap:"wrap"}}>
+          <div>
+            <span style={{fontSize:40,fontWeight:900,letterSpacing:-2,color:isUp?C.red:C.cyan}}>
+              ₩{stock.price.toLocaleString()}
+            </span>
+            <span style={{fontSize:18,marginLeft:12,fontWeight:700,color:isUp?C.red:C.cyan}}>
+              {isUp?"▲":"▼"} {Math.abs(stock.change).toLocaleString()} ({Math.abs(stock.changePct).toFixed(2)}%)
+            </span>
+          </div>
+          <div style={{display:"flex",gap:20,fontSize:12,flexWrap:"wrap"}}>
+            {[["시가",`₩${stock.open.toLocaleString()}`],["고가",`₩${stock.high.toLocaleString()}`],
+              ["저가",`₩${stock.low.toLocaleString()}`],["시총",stock.mktcap],
+              ["52H",`₩${stock.hi52.toLocaleString()}`],["52L",`₩${stock.lo52.toLocaleString()}`]]
+              .map(([k,v])=>(
+              <div key={k}>
+                <div style={{color:C.textSec,fontSize:10,marginBottom:2}}>{k}</div>
+                <div style={{color:C.textPrimary,fontWeight:600}}>{v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      {/* 탭 */}
+      <div style={{display:"flex",background:"#0B0D20",borderBottom:`1px solid ${C.border}`,
+        overflowX:"auto",scrollbarWidth:"none"}}>
+        {TABS.map(t=>{
+          const a=tab===t.id;
+          return(
+            <button key={t.id} onClick={()=>setTab(t.id)} style={{
+              border:"none",cursor:"pointer",padding:"13px 18px",
+              background:a?C.panel:"transparent",
+              borderBottom:a?`2px solid ${C.mg}`:"2px solid transparent",
+              color:a?C.mg:C.textSec,fontWeight:a?700:400,
+              fontSize:12,whiteSpace:"nowrap",transition:"all 0.2s"}}>
+              {t.icon} {t.label}
+            </button>
+          );
+        })}
+      </div>
+      {/* 본문 */}
+      <div style={{padding:"20px 24px",maxWidth:1100,margin:"0 auto"}}>
+        {tab==="overview"  &&<OverviewTab  stock={stock}/>}
+        {tab==="business"  &&<BusinessTab/>}
+        {tab==="financial" &&<FinancialTab/>}
+        {tab==="compare"   &&<CompareTab/>}
+        {tab==="news"      &&<NewsTab/>}
+        {tab==="report"    &&<ReportTab/>}
+        {tab==="opinion"   &&<OpinionTab/>}
+        {tab==="technical" &&<TechnicalTab/>}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
