@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026.10.21 한국증시 마감 브리핑</title>
+<style>
+  :root{
+    --bg:#0b0e14; --card:#141a24; --card2:#1b2230;
+    --line:#27303f; --txt:#eef2f8; --sub:#9aa7bd;
+    --up:#ff5b5b; --down:#3d8bff; --gold:#ffc861; --teal:#27e0b3;
+    --accent:#5b8cff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--txt);
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    -webkit-font-smoothing:antialiased; padding:28px 14px 60px;}
+  .wrap{max-width:480px; margin:0 auto;}
+  .hint{text-align:center; color:var(--sub); font-size:12.5px; margin-bottom:18px; line-height:1.6;}
+  .card{position:relative; background:var(--card); border:1px solid var(--line);
+    border-radius:24px; padding:30px 26px; margin-bottom:18px; overflow:hidden;
+    aspect-ratio:4/5; display:flex; flex-direction:column;}
+  .card::before{content:""; position:absolute; inset:0;
+    background:radial-gradient(120% 80% at 100% 0%, rgba(91,140,255,.10), transparent 55%);
+    pointer-events:none;}
+  .pagenum{position:absolute; top:18px; right:22px; font-size:12px; color:var(--sub);
+    letter-spacing:.5px; z-index:2;}
+  .kicker{font-size:12.5px; color:var(--accent); font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; margin-bottom:12px;}
+  .title{font-size:25px; font-weight:800; line-height:1.32; letter-spacing:-.4px;}
+  .title .hl{color:var(--gold);}
+  .body{position:relative; z-index:2;}
+  .sub{color:var(--sub); font-size:14px; line-height:1.7;}
+  .brand{margin-top:auto; display:flex; align-items:center; gap:9px; padding-top:18px;
+    font-size:12.5px; color:var(--sub); z-index:2;}
+  .dot{width:9px; height:9px; border-radius:50%; background:var(--teal);}
+
+  .cover{background:linear-gradient(160deg,#16203a 0%,#0c1018 70%);}
+  .cover .big{font-size:34px; font-weight:900; line-height:1.1; letter-spacing:-1px;}
+  .cover .date{font-size:15px; color:var(--gold); font-weight:700; margin-bottom:18px; letter-spacing:.5px;}
+  .cover .oneline{font-size:13.5px; color:var(--txt); line-height:1.65; margin-top:18px;
+    border-left:3px solid var(--down); padding-left:14px;}
+  .cover .badge{display:inline-block; background:linear-gradient(90deg,#5b8cff,#1d3fa1);
+    color:#fff; font-size:12.5px; font-weight:900; border-radius:999px; padding:5px 14px;
+    margin-bottom:14px; letter-spacing:.3px;}
+
+  .idx{display:flex; gap:12px; margin:6px 0 4px;}
+  .idxbox{flex:1; background:var(--card2); border:1px solid var(--line);
+    border-radius:16px; padding:16px 14px;}
+  .idxbox .nm{font-size:13px; color:var(--sub); margin-bottom:7px;}
+  .idxbox .vl{font-size:25px; font-weight:800; letter-spacing:-.5px;}
+  .idxbox .ch{font-size:13.5px; font-weight:700; margin-top:4px;}
+  .up{color:var(--up);} .down{color:var(--down);}
+  .fxrow{margin-top:14px; background:var(--card2); border:1px solid var(--line);
+    border-radius:14px; padding:13px 16px; display:flex; justify-content:space-between;
+    align-items:center; font-size:14px;}
+  .fxrow b{font-size:16px; font-weight:800;}
+
+  .li{display:flex; gap:11px; margin-top:14px; font-size:14.5px; line-height:1.55;}
+  .li .n{flex:0 0 auto; width:23px; height:23px; border-radius:7px; background:var(--card2);
+    border:1px solid var(--line); color:var(--accent); font-weight:800; font-size:12.5px;
+    display:flex; align-items:center; justify-content:center; margin-top:1px;}
+  .li b{color:var(--txt); font-weight:700;}
+  .li span{color:var(--sub);}
+
+  .tag{display:inline-block; font-size:12px; font-weight:700; padding:4px 10px;
+    border-radius:999px; margin:0 6px 6px 0;}
+  .t-up{background:rgba(255,91,91,.13); color:var(--up); border:1px solid rgba(255,91,91,.3);}
+  .t-down{background:rgba(61,139,255,.13); color:var(--down); border:1px solid rgba(61,139,255,.3);}
+  .t-gold{background:rgba(255,200,97,.12); color:var(--gold); border:1px solid rgba(255,200,97,.3);}
+  .t-teal{background:rgba(39,224,179,.12); color:var(--teal); border:1px solid rgba(39,224,179,.3);}
+
+  .tbl{width:100%; border-collapse:collapse; margin-top:6px; font-size:13.5px;}
+  .tbl th{color:var(--sub); font-weight:600; font-size:11.5px; text-align:right;
+    padding:7px 4px; border-bottom:1px solid var(--line);}
+  .tbl th:first-child{text-align:left;}
+  .tbl td{padding:10px 4px; border-bottom:1px solid var(--line); text-align:right; font-weight:700;}
+  .tbl td:first-child{text-align:left;}
+  .tbl tr:last-child td{border-bottom:none;}
+  .tbl a{color:var(--txt); text-decoration:none; font-weight:700;}
+  .tbl a:hover{color:var(--accent); text-decoration:underline;}
+  .tbl .sm{display:block; color:var(--sub); font-weight:500; font-size:11px; margin-top:1px;}
+  .tbl .px{color:var(--txt); font-weight:700;}
+
+  .grouphd{font-size:13px; font-weight:800; color:var(--accent); margin-top:14px; letter-spacing:.3px;}
+  .swt{width:100%; border-collapse:collapse; margin:4px 0 2px; font-size:10.5px;}
+  .swt th{color:var(--sub); font-weight:600; font-size:9.5px; text-align:center;
+    padding:5px 3px; border-bottom:1px solid var(--line);}
+  .swt th:first-child,.swt th:last-child{text-align:left;}
+  .swt td{padding:7px 3px; border-bottom:1px solid var(--line); text-align:center;
+    font-weight:700; vertical-align:top;}
+  .swt td:first-child{text-align:left;}
+  .swt td.r{color:var(--up);}
+  .swt td.d{color:var(--down);}
+  .swt td:last-child{text-align:left; color:var(--sub); font-weight:500; font-size:10px; line-height:1.4;}
+  .swt tr:last-child td{border-bottom:none;}
+  .swt a{color:var(--txt); text-decoration:none;}
+  .swt a:hover{color:var(--accent); text-decoration:underline;}
+  .swt .cd{display:block; color:var(--sub); font-weight:500; font-size:9px; margin-top:1px;}
+  .card.tall{aspect-ratio:auto;}
+
+  .disc{font-size:12px; color:var(--sub); line-height:1.65; background:var(--card2);
+    border:1px solid var(--line); border-radius:14px; padding:14px 15px; margin-top:6px;}
+  .cta{font-size:19px; font-weight:800; line-height:1.4; margin-top:14px;}
+  .cta .hl{color:var(--down);}
+  .note{font-size:11px; color:var(--sub); margin-top:8px; line-height:1.5;}
+
+  .warn-box{background:rgba(61,139,255,.08); border:1px solid rgba(61,139,255,.25);
+    border-radius:12px; padding:11px 13px; margin-top:10px; font-size:13px;
+    color:var(--down); line-height:1.55;}
+  .info-box{background:rgba(39,224,179,.08); border:1px solid rgba(39,224,179,.25);
+    border-radius:12px; padding:11px 13px; margin-top:10px; font-size:13px;
+    color:var(--teal); line-height:1.55;}
+  .alert-box{background:rgba(255,91,91,.10); border:1px solid rgba(255,91,91,.30);
+    border-radius:12px; padding:12px 14px; margin-top:10px; font-size:12.5px;
+    color:var(--up); line-height:1.6; font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="hint">📲 인스타·SNS 업로드용 카드 10장 · 각 카드를 캡처해 사용하세요<br>(영상 제작 전 검수용 자료 · 종목명 클릭 시 네이버증권으로 이동)</p>
+<section class="card cover"><span class="pagenum">01 / 10</span><div class="body"><p class="date" style="margin-top:0;">2026. 10. 21 (수) · 한국증시 마감 브리핑</p><span class="badge">📈 코스피 매수 사이드카 · 반도체 반등</span><p class="big">코스피 5,735.66<br>+3.29% 급반등</p><div class="oneline">20일 -3.73% 급락 뒤 삼성전자·SK하이닉스 반발 매수에 코스피는 5,735.66(+3.29%), 코스닥은 792.76(+1.38%)로 마감했습니다. 오전 10시 51분 코스피 매수 사이드카가 발동(두 달 만)됐고 장중 5,816.43(+4.75%)까지 올랐지만 5,800선은 지키지 못했습니다. 외국인은 코스피에서 약 6,580억원 순매수, 개인은 약 1조1,270억원 순매도입니다. 원/달러 1,325.2원(-2.9원)으로 4거래일 연속 연저점입니다.</div></div><div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div></section>
+<section class="card"><span class="pagenum">02 / 10</span><div class="body"><p class="kicker">오늘의 지수 (10/21 정규장 마감)</p><div class="idx"><div class="idxbox"><p class="nm">KOSPI</p><p class="vl up">5,735.66</p><p class="ch up">▲ +182.92 (+3.29%)</p></div><div class="idxbox"><p class="nm">KOSDAQ</p><p class="vl up">792.76</p><p class="ch up">▲ +10.79 (+1.38%)</p></div></div><div class="fxrow"><span>원/달러 환율 (주간거래 종가)</span><b class="down">1,325.2원 (-2.9원 · 원화 강세)</b></div><div class="fxrow"><span>美 필라델피아 반도체지수(SOX, 10/20 현지)</span><b style="font-size:13px;">미확인</b></div><div class="fxrow"><span>美 다우 / S&amp;P500 / 나스닥 (10/20 현지)</span><b style="font-size:12.5px;"><span class="up">+1.02%</span> / <span class="up">+0.28%</span> / <span class="down">-0.02%</span></b></div><div class="info-box">🔎 코스피 시가 5,666.34 → 장중 고점 5,816.43(+4.75%) → 5,735.66 마감(고점 대비 -80.77p). 전일(10/20) 종가는 5,552.74(-3.73%, -215.27p)였고, 10/2 종가(7,003.74) 대비로는 여전히 약 -18%입니다. 코스피 상승 372·하락 490, 코스닥 상승 832·하락 802. 코스닥은 시가 793.40, 장중 800을 넘었다가 800 아래로 마감했습니다. 거래대금은 미확인입니다.</div><p class="note">※ 지수·환율은 마감 보도 기준(뉴스1·한국일보·스타뉴스·라이센스뉴스·서울신문). 환율은 2024년 10월 이후 약 2년 만의 최저 수준(4거래일 연속 연저점)으로 보도. 수치는 실제와 차이가 있을 수 있습니다.</p></div><div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div></section>
+<section class="card"><span class="pagenum">03 / 10</span><div class="body"><p class="kicker">투자자별 수급 (10/21)</p><p class="title">외국인 코스피 순매수 전환 주도<br><span class="hl">+6,580억 · 개인 -1.13조</span></p><p class="sub" style="margin-top:8px;margin-bottom:4px;font-size:13px;color:var(--accent);">▶ 코스피 (마감 집계)</p><div class="li"><span class="n">외</span><span><b class="up">외국인 약 6,580억원 순매수</b> — 상승 주도(라이센스뉴스 6,600억원). 삼성전자·SK하이닉스 반등과 맞물림</span></div><div class="li"><span class="n">기</span><span><b class="down">기관 약 740억원 순매도</b> — (라이센스뉴스 722억원)</span></div><div class="li"><span class="n">개</span><span><b class="down">개인 약 1조1,270억원 순매도</b> — (라이센스뉴스 1조1,308억원) 반등 구간 차익 실현</span></div><p class="sub" style="margin-top:10px;font-size:13px;color:var(--accent);">▶ 코스닥 (라이센스뉴스)</p><div class="li"><span class="n">코</span><span><b class="up">기관 약 +1,047억원</b> · <b class="up">개인 약 +516억원</b> · <b class="down">외국인 약 -1,720억원</b></span></div><div class="info-box">🔎 장중 흐름: 10:55 외국인 +6,466억·기관 +3,032억·개인 -1조3,784억 → 14:14 외국인 +4,183억·기관 +471억·개인 -1조45억으로 기관 매수가 줄었다가 마감에 외국인 매수가 확대됐습니다. 직전 거래일(10/20) 외국인 수급과 10/16 코스피 +3,410억 순매수(선물 -1.14조)와의 연속 비교는 10/20 수치를 확인하지 못해 '미확인'입니다.</div><p class="note">※ 매체별 금액이 다르며 세 주체 합계가 0이 되지 않습니다(기타법인 등 미설명). 영상에는 KRX 확정치로 재확인 바랍니다.</p></div><div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div></section>
+<section class="card"><span class="pagenum">04 / 10</span><div class="body"><p class="kicker">오늘의 국내 이슈</p><div class="li"><span class="n">1</span><span><b>코스피 5,735.66(+3.29%)·코스닥 792.76(+1.38%)</b> — 전일 코스피 -3.73% 급락(5,552.74) 후 반등</span></div><div class="li"><span class="n">2</span><span><b>코스피 매수 사이드카</b> — 10시 51분 56초 발동. 코스피200 선물이 기준가 859.90 대비 +5.22%(904.84)를 1분 이상 유지, 프로그램 매수호가 5분간 효력정지. 두 달 만의 발동</span></div><div class="li"><span class="n">3</span><span><b>삼성전자 +5.67%(223,500원), SK하이닉스 +5.81%(1,294,000원)</b> — 장중 최대 +7.57%·+8.59%까지 올랐으나 상승폭 일부 반납. AI 수익성 우려 완화로 반도체 중심 반등(신한투자증권)</span></div><div class="li"><span class="n">4</span><span><b>SK㈜ +12.62%</b> — SK스퀘어 +5.13%, SK이노베이션 +4.19%, S-Oil +2.71%. 머니투데이 헤드라인에 'SK하이닉스 40조 규모 자사주 매입 완료'(본문 미확인)</span></div><div class="li"><span class="n">5</span><span><b>엘리스 +29.92%(79,900원)</b> — 상장 첫날(10/20) -32.04% 급락 후 반등. 일부 매체는 '상한가 반전'으로 표기했으나 종가 등락률은 +29.92%라 상한가 단정은 재확인 필요</span></div><div class="li"><span class="n">6</span><span><b>방향성 한계</b> — 코스피 상승 372 vs 하락 490으로 대형 반도체 쏠림 장세. 5,800선 회복 실패. 머니투데이 헤드라인: '양대지수 상단막힌 반등…이젠 메타 실적 시험대'</span></div><div class="warn-box">⚠️ 10월 1~20일 반도체 수출 616억달러 '역대 최대'(아시아경제 헤드라인, 본문 미확인). 22일 코스피 5,800 회복 여부와 반도체 대형주 매수세 지속이 관전 포인트입니다.</div></div><div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div></section>
+<section class="card"><span class="pagenum">05 / 10</span><div class="body"><p class="kicker">한국 시장에 영향 준 해외 뉴스</p><div class="li"><span class="n">1</span><span><b>뉴욕 증시(10/20 현지)</b> — 다우 +1.02%, S&amp;P500 +0.28%, 나스닥 -0.02%. 미국 증시 전반이 강세는 아니었음</span></div><div class="li"><span class="n">2</span><span><b>슈퍼마이크로 분기 잠정 매출 190억달러</b> — 시장 예상 150억달러 상회. 20일 정규장 마감 후 발표, 시간외 +13%대. 마이크론·샌디스크 +2%대</span></div><div class="li"><span class="n">3</span><span><b>스페이스X 3분기 매출 145억8,000만달러</b> — 전년 대비 +161%, 흑자 전환. AI 사업 매출 75억6,000만달러(+830%, 예상 63억달러 상회)</span></div><div class="li"><span class="n">4</span><span><b>엘리스 상장 참패</b> — 블룸버그 'AI 기업의 상장 참패, AI 투자 열풍 종말 우려 자극', 로이터 'AI 지출 우려 증폭'. 20일 급락 요인, 21일에는 반등</span></div><div class="li"><span class="n">5</span><span><b>원화 강세</b> — 원/달러 1,325.2원, 약 2년 만의 저점. 미국 국채금리·국제유가가 변수로 거론</span></div><div class="warn-box">⚠️ SOX 지수 등락률은 보도에서 확인하지 못했습니다(미확인). 해외 수치는 한국일보·스타뉴스 보도 인용이며 영상 제작 전 재확인 바랍니다.</div></div><div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div></section>
+<section class="card tall"><span class="pagenum">06 / 10</span><div class="body"><p class="kicker">코스피 주요 종목 (10/21 마감)</p><p class="sub" style="margin-bottom:8px;">반도체·SK그룹이 반등을 주도했고 2차전지·금융·자동차는 약보합. 상승 372·하락 490.</p><table class="tbl"><tr><th>종목</th><th>등락률</th><th>등락폭</th><th>종가</th></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=005930" target="_blank">삼성전자<span class="sm">반도체·005930</span></a></td><td class="up">+5.67%</td><td class="up">+12,000*</td><td class="px">223,500</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=000660" target="_blank">SK하이닉스<span class="sm">반도체·000660</span></a></td><td class="up">+5.81%</td><td class="up">미확인</td><td class="px">1,294,000</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=005935" target="_blank">삼성전자우<span class="sm">반도체·005935</span></a></td><td class="up">+3.80%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=402340" target="_blank">SK스퀘어<span class="sm">지주·반도체·402340</span></a></td><td class="up">+5.13%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=034730" target="_blank">SK㈜<span class="sm">지주·034730</span></a></td><td class="up">+12.62%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=096770" target="_blank">SK이노베이션<span class="sm">에너지·096770</span></a></td><td class="up">+4.19%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=010950" target="_blank">S-Oil<span class="sm">정유·010950</span></a></td><td class="up">+2.71%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=028260" target="_blank">삼성물산<span class="sm">지주·028260</span></a></td><td class="up">+5.45%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=032830" target="_blank">삼성생명<span class="sm">보험·032830</span></a></td><td class="up">+3.38%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=009150" target="_blank">삼성전기<span class="sm">전자부품·009150</span></a></td><td class="up">+1.13%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=207940" target="_blank">삼성바이오로직스<span class="sm">바이오·207940</span></a></td><td class="up">+1.87%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=373220" target="_blank">LG에너지솔루션<span class="sm">2차전지·373220</span></a></td><td class="down">-0.60%</td><td class="down">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=005380" target="_blank">현대차<span class="sm">자동차·005380</span></a></td><td class="down">-0.16%</td><td class="down">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=105560" target="_blank">KB금융<span class="sm">금융·105560</span></a></td><td class="down">-0.19%</td><td class="down">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=006400" target="_blank">삼성SDI<span class="sm">2차전지·006400</span></a></td><td class="down">-0.36%</td><td class="down">미확인</td><td class="px">미확인</td></tr></table><p class="note">※ 종목명 클릭 시 네이버증권 이동. 등락폭·종가 중 보도에서 확인되지 않은 값은 '미확인'(추정 없음)입니다. 영상 제작 전 재확인 바랍니다. *는 등락률(+5.67%)과 종가로 역산한 값입니다.</p></div><div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div></section>
+<section class="card tall"><span class="pagenum">07 / 10</span><div class="body"><p class="kicker">코스닥 주요 종목 (10/21)</p><p class="sub" style="margin-bottom:6px;">코스닥 792.76(+1.38%). 시총 상위가 모두 상승했으나 800선은 넘지 못했습니다. 바이오 강세(라이센스뉴스).</p><table class="tbl"><tr><th>종목</th><th>등락률</th><th>등락폭</th><th>종가</th></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=196170" target="_blank">알테오젠<span class="sm">바이오·196170</span></a></td><td class="up">+3.90%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=247540" target="_blank">에코프로비엠<span class="sm">2차전지·247540</span></a></td><td class="up">+3.33%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=036930" target="_blank">주성엔지니어링<span class="sm">반도체장비·036930</span></a></td><td class="up">+3.48%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=277810" target="_blank">레인보우로보틱스<span class="sm">로봇·277810</span></a></td><td class="up">+0.67%</td><td class="up">미확인</td><td class="px">미확인</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=086520" target="_blank">에코프로<span class="sm">2차전지·086520</span></a></td><td class="up">+0.12%</td><td class="up">미확인</td><td class="px">미확인</td></tr></table><p class="note">※ 종목명 클릭 시 네이버증권 이동. 등락폭·종가 중 보도에서 확인되지 않은 값은 '미확인'(추정 없음)입니다. 영상 제작 전 재확인 바랍니다. 엘리스는 +29.92%(79,900원)로 반등했으나 소속 시장·종목코드는 확인하지 못해 표에서 제외했습니다(미확인).</p></div><div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div></section>
+<section class="card"><span class="pagenum">08 / 10</span><div class="body"><p class="kicker">오늘의 주도 테마</p><p class="title" style="margin-bottom:14px;">반도체 대형주 반발 매수,<br><span class="hl">SK그룹·AI 인프라가 동행</span></p><div><span class="tag t-up">반도체 대형</span><span class="tag t-up">SK그룹</span><span class="tag t-up">AI 인프라</span><span class="tag t-up">코스닥 바이오</span><span class="tag t-down">2차전지·금융</span></div><div class="li"><span class="n">💾</span><span><b>반도체 대형(강세)</b> — 삼성전자 +5.67%, SK하이닉스 +5.81%, 삼성전자우 +3.80%, SK스퀘어 +5.13%. 슈퍼마이크로 호실적(시간외 +13%)과 AI 수익성 우려 완화</span></div><div class="li"><span class="n">🔶</span><span><b>SK그룹·에너지(강세)</b> — SK㈜ +12.62%, SK이노베이션 +4.19%, S-Oil +2.71%</span></div><div class="li"><span class="n">🤖</span><span><b>AI 인프라</b> — 엘리스 +29.92%(전일 -32.04% 후 반등). 스페이스X AI 매출 +830% 소식</span></div><div class="li"><span class="n">💊</span><span><b>코스닥 바이오</b> — 알테오젠 +3.90% 등 강세</span></div><p class="note">※ 테마 등락은 보도 기준이며 거래대금은 미확인입니다. 2차전지 대형주(LG에너지솔루션 -0.60%, 삼성SDI -0.36%)와 KB금융·현대차는 약보합이었습니다.</p></div><div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div></section>
+<section class="card tall"><span class="pagenum">09 / 10</span><div class="body"><p class="sub" style="margin-bottom:4px;font-size:12.5px;">스윙(수일~수주) 관점의 관찰·분할 접근 후보입니다. 고점(10/2 7,003.74) 대비 약 -18% 구간의 변동성 장세라 비중 확대보다 분할·방어가 우선입니다. 1/3/6개월 변동률은 신뢰할 자료가 없어 '미확인'(추정 없음)입니다.</p><p class="grouphd">① 반도체 대형·밸류체인 (외국인 수급 확인 후 분할)</p><table class="swt"><tr><th>종목</th><th>종가</th><th>1M</th><th>3M</th><th>6M</th><th>선정 사유</th></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=005930" target="_blank">삼성전자</a><span class="cd">005930</span></td><td>223,500</td><td>미확인</td><td>미확인</td><td>미확인</td><td>+5.67%. 장중 +7.57%(227,500원) 후 일부 반납 → 22만원대 지지 확인 필요. 외국인 순매수 전환 환경</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=000660" target="_blank">SK하이닉스</a><span class="cd">000660</span></td><td>1,294,000</td><td>미확인</td><td>미확인</td><td>미확인</td><td>+5.81%. 장중 +8.59% 후 반납. 자사주 40조 매입 완료 헤드라인(본문 미확인). 변동성 큼, 소량 분할</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=402340" target="_blank">SK스퀘어</a><span class="cd">402340</span></td><td>미확인</td><td>미확인</td><td>미확인</td><td>미확인</td><td>+5.13%. SK하이닉스 지주 성격, 그룹 강세(SK㈜ +12.62%) 동행</td></tr></table><p class="grouphd">② 반도체 장비·바이오 (코스닥)</p><table class="swt"><tr><th>종목</th><th>종가</th><th>1M</th><th>3M</th><th>6M</th><th>선정 사유</th></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=036930" target="_blank">주성엔지니어링</a><span class="cd">036930</span></td><td>미확인</td><td>미확인</td><td>미확인</td><td>미확인</td><td>+3.48%. 반도체 장비, 반도체 업황 반등 수혜 기대</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=196170" target="_blank">알테오젠</a><span class="cd">196170</span></td><td>미확인</td><td>미확인</td><td>미확인</td><td>미확인</td><td>+3.90%. 코스닥 바이오 강세 지속 여부 점검</td></tr></table><p class="grouphd">③ ETF (개별 변동성 완화)</p><table class="swt"><tr><th>종목</th><th>종가</th><th>1M</th><th>3M</th><th>6M</th><th>선정 사유</th></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=069500" target="_blank">KODEX 200</a><span class="cd">069500</span></td><td>미확인</td><td>미확인</td><td>미확인</td><td>미확인</td><td>코스피200 분산 노출. 지수 반등·사이드카 이후 5,800선 재도전 베팅 시 개별 리스크 완화</td></tr><tr><td><a href="https://finance.naver.com/item/main.naver?code=091160" target="_blank">KODEX 반도체</a><span class="cd">091160</span></td><td>미확인</td><td>미확인</td><td>미확인</td><td>미확인</td><td>반도체 대형·소부장 분산. 외국인 매수 지속 여부 확인 후 접근</td></tr></table><p class="note">⚠️ 본 자료는 투자 참고용이며 매매 권유가 아닙니다. 대형주 쏠림 반등으로 추가 하락 가능성이 있어 분할 접근·손절 기준·비중 관리가 필요합니다. 주식 투자에는 원금 손실 위험이 있습니다.</p></div><div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓</div></section>
+<section class="card cover"><span class="pagenum">10 / 10</span><div class="body"><p class="date">2026. 10. 21 (수) · 마감 총평</p><p class="cta">사이드카 반등,<br><span class="hl" style="color:var(--gold);">5,800선 안착은 아직</span></p><p class="sub" style="margin-top:14px;line-height:1.7;">코스피는 5,735.66(+3.29%), 코스닥은 792.76(+1.38%)로 마감했습니다. 외국인이 코스피에서 약 6,580억원 순매수하며 삼성전자·SK하이닉스 반등을 이끌었지만, 상승 종목(372)보다 하락 종목(490)이 많은 대형주 쏠림 장이었고 장중 고점(5,816.43)에서 80p 가까이 밀렸습니다. 다음 체크 포인트는 22일 코스피 5,800 회복 여부, 외국인 수급 지속성, 반도체 대형주 매수세, 메타 등 美 실적 시즌입니다.</p><div class="disc">📢 본 브리핑은 영상 제작 전 검수 목적으로 작성된 자료입니다. 수치는 보도·공개 자료 기준이며 실제와 차이가 있을 수 있고, 확인되지 않은 값은 '미확인'으로 표기했습니다. 영상·게시물 제작 전 반드시 최신 수치로 재확인해 주세요. 본 자료는 어떠한 투자 권유도 아니며 투자 판단과 책임은 본인에게 있습니다. 주식 투자에는 원금 손실 위험이 있습니다.</div></div><div class="brand"><span class="dot"></span> 노쌍의 데일리 마켓 · 구독자와 함께하는 시황</div></section>
+</div>
+</body>
+</html>
